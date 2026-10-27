@@ -226,12 +226,12 @@ const NOTES=[
   html:(L,l)=>`<span class="period">${L.edu1_period}</span><h4>Wrocław University of Science and Technology</h4><p>${L.edu1_body}</p>
     <span class="period">${L.edu2_period}</span><h4>Electronic Schools Complex, Bolesławiec</h4><p>${L.edu2_body}</p>`},
  {id:'koda',t:{en:'KODA.AI',pl:'KODA.AI'},sub:{en:'Sep 2026',pl:'Wrz 2026'},
-  html:(L,l)=>l==='pl'?`<span class="period">Wrzesień 2026 · praktyki, 120 godzin</span><h4>KODA.AI — praktykant, Generative Prompt Engineer</h4>
+  html:(L,l)=>l==='pl'?`<span class="period">Wrzesień i październik 2026 · praktyki, 160 godzin</span><h4>KODA.AI — praktykant, Generative Prompt Engineer</h4>
     <ul><li>Praca na platformie konwersacyjnej AI KODA: testowanie chatbotów i voicebotów, weryfikacja promptów i baz wiedzy oraz ocena przebiegu rozmów.</li>
     <li>Porównywanie modeli językowych pod kątem jakości i spójności odpowiedzi oraz dopasowania do zastosowań klientów; wnioski i dokumentacja QA.</li>
     <li>Tworzenie i testowanie przepływów n8n oraz integracji API automatyzujących procesy biznesowe, z dokumentacją ich logiki i wymagań wdrożeniowych.</li>
     <li>Realizacja zadań zgodnie z wymaganiami, dokumentowanie postępów i uwzględnianie uwag zespołu.</li></ul>`
-   :`<span class="period">September 2026 · 120-hour internship</span><h4>KODA.AI — Generative Prompt Engineer Intern</h4>
+   :`<span class="period">September and October 2026 · 160-hour internship</span><h4>KODA.AI — Generative Prompt Engineer Intern</h4>
     <ul><li>Worked on KODA's conversational AI platform: testing chatbots and voicebots, validating prompts and knowledge bases, and assessing how conversations flow.</li>
     <li>Compared language models on response quality, consistency and fit for client use cases, and wrote up the findings as QA documentation.</li>
     <li>Built and tested n8n workflows and API integrations that automate business processes, and documented their logic and deployment requirements.</li>
