@@ -293,9 +293,9 @@ a.key{text-decoration:none;}
 .note p{margin:0 0 .85em;font:400 16px/1.55 var(--sans);color:var(--ink);break-inside:auto;} .note b{font-weight:700;}
 .note.pb{columns:auto;display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;} .note.pb .col p{font-size:15px;line-height:1.5;}
 .note .shl{margin:14px 0 6px;} .note .thumbs{margin:0;}
-@container card (max-width:660px){.note.bd{columns:1;} .note.pb{display:block;} .note.pb .col+.col{margin-top:10px;}}
+@container card (max-width:660px){.note.bd{columns:auto;} .note.pb{display:block;} .note.pb .col+.col{margin-top:10px;}}
 
-.note.bd:not(.pb){columns:1;} .note.bd:not(.pb) p{max-width:66ch;font-size:17px;line-height:1.58;}
+.note.bd:not(.pb){columns:auto;} .note.bd:not(.pb) p{max-width:66ch;font-size:17px;line-height:1.58;}
 .links a{background:none;transition:background-color .15s,color .15s,padding .2s;}
 .links a:hover,.links a:focus-visible{background:var(--spot);color:var(--spot-ink);}
 .flipk:hover,.btn.line:hover,#facts a.back:hover{background:var(--spot);color:var(--spot-ink);}
@@ -372,7 +372,7 @@ body{--lc:color-mix(in srgb,var(--ink) 48%,transparent);}
 .ft .btn{font-size:17px;}
 @media (max-width:700px){.note p{font-size:25px;} .note.pb .col p{font-size:22px;}}
 .note.bd:not(.pb){columns:2 340px;column-gap:48px;} .note.bd:not(.pb) p{max-width:none;font-size:26px;}
-@media (max-width:700px){.note.bd:not(.pb){columns:1;} .note.bd:not(.pb) p{font-size:25px;}}
+@media (max-width:700px){.note.bd:not(.pb){columns:auto;} .note.bd:not(.pb) p{font-size:25px;}}
 .note.bd:not(.pb) p{font-size:24px;line-height:1.24;}
 
 /* Simple Handmade for everything; Biro only for the pen notes */
