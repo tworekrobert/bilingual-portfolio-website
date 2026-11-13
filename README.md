@@ -29,7 +29,7 @@
 
 ## About
 
-This is the portfolio of Robert Tworek, a Technical Computer Science student at Wroclaw University of Science and Technology and a junior C#/.NET developer looking for a first commercial role. The site has three main projects (OrderFlow, Helpdesk, Pharmacy), an "Other projects" card that fills itself from GitHub, experience, education, skills and a contact card.
+This is the portfolio of Robert Tworek, a Technical Computer Science student at Wroclaw University of Science and Technology and an AI and .NET developer (LLM agents, automation, ASP.NET Core backends) looking for a first commercial role. The site has three main projects (OrderFlow, Helpdesk, Pharmacy), an "Other projects" card that fills itself from GitHub, experience, education, skills and a contact card.
 
 ## What's in the deck
 

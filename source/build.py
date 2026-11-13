@@ -40,9 +40,9 @@ html=f'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Robert Tworek | Junior C#/.NET Developer</title>
-<meta name="description" content="Robert Tworek, Junior C#/.NET Developer. A portfolio laid out as a deck of printed cards: projects, background and a plain-text summary.">
-<meta property="og:title" content="Robert Tworek | Junior C#/.NET Developer">
+<title>Robert Tworek | AI + .NET Developer</title>
+<meta name="description" content="Robert Tworek, AI and .NET developer. A portfolio laid out as a deck of printed cards: projects, background and a plain-text summary.">
+<meta property="og:title" content="Robert Tworek | AI + .NET Developer">
 <meta property="og:description" content="A portfolio laid out as a deck of printed cards: projects, background and a plain-text summary.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://portfoliotworekrobert.vercel.app/og-image.png">
