@@ -527,17 +527,23 @@ body.phys #deck *{touch-action:pan-y;}
 .note b{background-repeat:no-repeat;background-size:100% 100%;}
 .note.writing b{background-size:0 100%;}
 .note.writing.lit b{background-size:100% 100%;transition:background-size .32s ease-out var(--hd,0ms);}
-/* screenshots are stuck on: the picture comes down, then the tape goes over it */
-@keyframes stick{from{opacity:0;translate:0 -18px;scale:1.14;}55%{opacity:1;translate:0 0;scale:1;}72%{scale:.975;}to{scale:1;}}
-@keyframes tape{from{scale:0 1;}to{scale:1 1;}}
+/* screenshots are stuck on: the picture is brought in at an angle, held above the card (its shadow is far), put down, pressed flat, then taped */
+@keyframes stick{0%{opacity:0;translate:var(--fx,26px) -36px;rotate:var(--fr,9deg);scale:1.2;box-shadow:0 0 0 1.5px var(--ink),11px 15px 0 var(--rule);}
+ 12%{opacity:1;}
+ 52%{translate:0 0;rotate:calc(var(--fr,9deg)*-.17);scale:1.03;box-shadow:0 0 0 1.5px var(--ink),2px 3px 0 var(--rule);}
+ 66%{scale:.962;rotate:calc(var(--fr,9deg)*.09);box-shadow:0 0 0 1.5px var(--ink),0 0 0 var(--rule);}
+ 83%{scale:1.012;rotate:calc(var(--fr,9deg)*-.03);}
+ 100%{translate:0 0;rotate:0deg;scale:1;box-shadow:0 0 0 1.5px var(--ink),0 0 0 var(--rule);}}
+@keyframes tape{0%{scale:0 1;}70%{scale:1.07 1;}100%{scale:1 1;}}
 .thumbs button::before{content:"";position:absolute;z-index:2;top:-4px;left:31%;width:38%;height:11px;background:color-mix(in srgb,var(--spot) 62%,transparent);transform:rotate(-2deg);transform-origin:0 50%;pointer-events:none;}
 .thumbs button:nth-child(2n)::before{left:26%;transform:rotate(2.4deg);} .thumbs button:nth-child(3n)::before{left:36%;transform:rotate(-.8deg);}
-.note.writing .thumbs button{animation:stick .34s cubic-bezier(.3,.7,.3,1) backwards var(--sd,0ms);}
-.note.writing .thumbs button::before{animation:tape .16s ease-out backwards calc(var(--sd,0ms) + 230ms);}
+.thumbs button:nth-child(2n){--fx:-22px;--fr:-8deg;} .thumbs button:nth-child(3n){--fx:14px;--fr:6deg;}
+.note.writing .thumbs button{animation:stick .54s cubic-bezier(.35,.6,.35,1) backwards var(--sd,0ms);}
+.note.writing .thumbs button::before{animation:tape .2s ease-out backwards calc(var(--sd,0ms) + 390ms);}
 .plate::after{transform-origin:0 50%;}
 .card.fresh .plate:not(.art){visibility:hidden;}
-.card.draw .plate:not(.art){animation:stick .38s cubic-bezier(.3,.7,.3,1) backwards .16s;}
-.card.draw .plate:not(.art)::after{animation:tape .18s ease-out backwards .42s;}
+.card.draw .plate:not(.art){--fx:-30px;--fr:-5deg;animation:stick .58s cubic-bezier(.35,.6,.35,1) backwards .14s;}
+.card.draw .plate:not(.art)::after{animation:tape .22s ease-out backwards .55s;}
 /* ---------- sticker: a corner lifts under the pointer, and it can be moved ---------- */
 .sticker{z-index:5;cursor:grab;touch-action:none;translate:var(--px,0px) var(--py,0px);transition:scale .16s,rotate .16s;--f:0px;}
 .sticker::before,.sticker::after{content:"";position:absolute;right:0;bottom:0;width:var(--f);height:var(--f);transition:width .18s cubic-bezier(.3,.8,.3,1),height .18s cubic-bezier(.3,.8,.3,1);pointer-events:none;}
@@ -548,3 +554,6 @@ body.phys #deck *{touch-action:pan-y;}
 @keyframes press{from{scale:1.07;}55%{scale:.955;}to{scale:1;}}
 .sticker.stuck{animation:press .26s cubic-bezier(.3,.7,.3,1);}
 @media (max-width:720px){.sticker{translate:none;cursor:default;touch-action:auto;}}
+/* sending stamps the date on the note */
+@keyframes stamped{0%{opacity:0;scale:1.9;rotate:6deg;}55%{opacity:1;scale:.94;rotate:-9deg;}75%{scale:1.03;}100%{opacity:1;scale:1;rotate:-8deg;}}
+.stamped{position:absolute;right:8%;top:38%;padding:5px 14px 3px;font:400 30px/1 "Hand",var(--sans);-webkit-text-stroke:.6px currentColor;letter-spacing:.04em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 78%,var(--stock));box-shadow:inset 0 0 0 2.5px currentColor,0 0 0 2px var(--stock),0 0 0 3.5px currentColor;border-radius:4px 7px 5px 8px/7px 4px 8px 5px;rotate:-8deg;pointer-events:none;animation:stamped .3s cubic-bezier(.3,.7,.3,1) .1s backwards;}
