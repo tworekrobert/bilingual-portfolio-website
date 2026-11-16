@@ -514,7 +514,7 @@ body.phys #deck *{touch-action:pan-y;}
 .card.fresh .hd .sp,.card.fresh :is(.toc button,.links a,.does li,.chips .chip,.ent,.sk)::before,.card.fresh :is(.toc button,.links a,.does li,.chips .chip,.pb h5,.lnk)::after{clip-path:inset(0 100% 0 0);}
 .card.draw .hd .sp,.card.draw :is(.toc button,.links a,.does li,.chips .chip,.ent,.sk)::before,.card.draw :is(.toc button,.links a,.does li,.chips .chip,.pb h5,.lnk)::after{animation:pen .5s cubic-bezier(.3,.5,.3,1) both;animation-delay:calc(140ms + var(--n,0)*65ms);}
 .note .w{display:inline-block;}
-.note.writing .w{animation:wr 90ms linear both;}
+.note.writing .w{animation:wr 90ms linear backwards;}
 /* a link is underlined again, by hand, when the pointer is on it */
 .lnk:hover{background:none;color:var(--ink);border-color:var(--ink);}
 .lnk:hover::after{animation:pen .38s cubic-bezier(.3,.5,.3,1) both;}
@@ -527,3 +527,24 @@ body.phys #deck *{touch-action:pan-y;}
 .note b{background-repeat:no-repeat;background-size:100% 100%;}
 .note.writing b{background-size:0 100%;}
 .note.writing.lit b{background-size:100% 100%;transition:background-size .32s ease-out var(--hd,0ms);}
+/* screenshots are stuck on: the picture comes down, then the tape goes over it */
+@keyframes stick{from{opacity:0;translate:0 -18px;scale:1.14;}55%{opacity:1;translate:0 0;scale:1;}72%{scale:.975;}to{scale:1;}}
+@keyframes tape{from{scale:0 1;}to{scale:1 1;}}
+.thumbs button::before{content:"";position:absolute;z-index:2;top:-4px;left:31%;width:38%;height:11px;background:color-mix(in srgb,var(--spot) 62%,transparent);transform:rotate(-2deg);transform-origin:0 50%;pointer-events:none;}
+.thumbs button:nth-child(2n)::before{left:26%;transform:rotate(2.4deg);} .thumbs button:nth-child(3n)::before{left:36%;transform:rotate(-.8deg);}
+.note.writing .thumbs button{animation:stick .34s cubic-bezier(.3,.7,.3,1) backwards var(--sd,0ms);}
+.note.writing .thumbs button::before{animation:tape .16s ease-out backwards calc(var(--sd,0ms) + 230ms);}
+.plate::after{transform-origin:0 50%;}
+.card.fresh .plate:not(.art){visibility:hidden;}
+.card.draw .plate:not(.art){animation:stick .38s cubic-bezier(.3,.7,.3,1) backwards .16s;}
+.card.draw .plate:not(.art)::after{animation:tape .18s ease-out backwards .42s;}
+/* ---------- sticker: a corner lifts under the pointer, and it can be moved ---------- */
+.sticker{z-index:5;cursor:grab;touch-action:none;translate:var(--px,0px) var(--py,0px);transition:scale .16s,rotate .16s;--f:0px;}
+.sticker::before,.sticker::after{content:"";position:absolute;right:0;bottom:0;width:var(--f);height:var(--f);transition:width .18s cubic-bezier(.3,.8,.3,1),height .18s cubic-bezier(.3,.8,.3,1);pointer-events:none;}
+.sticker::before{background:var(--stock);clip-path:polygon(100% 0,100% 100%,0 100%);box-shadow:none;}
+.sticker::after{background:color-mix(in srgb,var(--spot) 70%,var(--spot-ink));clip-path:polygon(0 0,100% 0,0 100%);}
+@media (hover:hover){.sticker:hover{--f:17px;}}
+.sticker.up{--f:0px;scale:1.07;rotate:2.5deg;cursor:grabbing;}
+@keyframes press{from{scale:1.07;}55%{scale:.955;}to{scale:1;}}
+.sticker.stuck{animation:press .26s cubic-bezier(.3,.7,.3,1);}
+@media (max-width:720px){.sticker{translate:none;cursor:default;touch-action:auto;}}
