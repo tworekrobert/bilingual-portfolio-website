@@ -508,3 +508,22 @@ body.phys .card[style*="--dim"] .face::after{transition:none;}
 body.grabbing .side{opacity:0;}
 body.phys #deck *{touch-action:pan-y;}
 .sw{display:grid;text-align:left;} .sw>*{grid-area:1/1;} .sw>.off{visibility:hidden;}
+/* ---------- ink: pen lines are drawn once, notes are written once ---------- */
+@keyframes pen{from{clip-path:inset(-4px 100% -4px 0);}to{clip-path:inset(-4px 0 -4px 0);}}
+@keyframes wr{from{clip-path:inset(-30% 100% -30% -2%);}to{clip-path:inset(-30% -6% -30% -2%);}}
+.card.fresh .hd .sp,.card.fresh :is(.toc button,.links a,.does li,.chips .chip,.ent,.sk)::before,.card.fresh :is(.toc button,.links a,.does li,.chips .chip,.pb h5,.lnk)::after{clip-path:inset(0 100% 0 0);}
+.card.draw .hd .sp,.card.draw :is(.toc button,.links a,.does li,.chips .chip,.ent,.sk)::before,.card.draw :is(.toc button,.links a,.does li,.chips .chip,.pb h5,.lnk)::after{animation:pen .5s cubic-bezier(.3,.5,.3,1) both;animation-delay:calc(140ms + var(--n,0)*65ms);}
+.note .w{display:inline-block;}
+.note.writing .w{animation:wr 90ms linear both;}
+/* a link is underlined again, by hand, when the pointer is on it */
+.lnk:hover{background:none;color:var(--ink);border-color:var(--ink);}
+.lnk:hover::after{animation:pen .38s cubic-bezier(.3,.5,.3,1) both;}
+/* tabs are small cards too: they come up with a little too much push and can be pressed down */
+.tab{transition:transform .42s cubic-bezier(.3,1.7,.5,1),background .15s,color .15s;}
+.tab:active{transform:translateY(11px);transition-duration:.06s;}
+.btn:active,.flipk:active,.key:active{transform:translate(1px,2px);}
+@media (prefers-reduced-motion:reduce){.tab{transition-duration:.01s;}}
+/* the highlighter goes over a heading after the pen has written it */
+.note b{background-repeat:no-repeat;background-size:100% 100%;}
+.note.writing b{background-size:0 100%;}
+.note.writing.lit b{background-size:100% 100%;transition:background-size .32s ease-out var(--hd,0ms);}
