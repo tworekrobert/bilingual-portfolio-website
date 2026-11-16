@@ -563,6 +563,7 @@ body.phys .card[style*="--dim"] .face::after{transition:none;}
 .side{transition:background .15s,color .15s,box-shadow .15s,opacity .2s;}
 body.grabbing .side{opacity:0;}
 body.phys #deck *{touch-action:pan-y;}
+.sw{display:grid;text-align:left;} .sw>*{grid-area:1/1;} .sw>.off{visibility:hidden;}
 
 </style>
 </head>
@@ -1002,8 +1003,8 @@ const MORE=[
 const BK={
  cover:{en:["<b>About me.</b> I'm in my last semester of Technical Computer Science at Wrocław University of Science and Technology, finishing my engineering thesis. I graduate in February 2027. I'm looking for roles where an LLM-based system has to work inside a real product: AI implementation, prompt engineering, automation or junior .NET. Remote or Wrocław, full-time, available right away.","My AI experience comes from KODA.AI, where I spent 160 hours on a production chatbot and voicebot platform: tuning intents and knowledge-base content, testing bots against real client scenarios, comparing language models and building n8n automations.","I mostly write backends in ASP.NET Core with PostgreSQL, and desktop apps in Avalonia. I like having real tests behind my code. I speak Polish and English (B2).","Lately I'm also building a desktop app for audio signal analysis and visualization, so the music never really left."],
         pl:["<b>O mnie.</b> Jestem na ostatnim semestrze Informatyki Technicznej na Politechnice Wrocławskiej i kończę pracę inżynierską. Bronię się w lutym 2027. Szukam ról, w których system oparty na LLM musi działać w prawdziwym produkcie: wdrażanie AI, prompt engineering, automatyzacja lub junior .NET. Zdalnie lub we Wrocławiu, pełny etat, od zaraz.","Doświadczenie z AI zdobyłem w KODA.AI, gdzie przez 160 godzin pracowałem na produkcyjnej platformie chatbotów i voicebotów: dostrajałem intencje i bazy wiedzy, testowałem boty na prawdziwych scenariuszach klientów, porównywałem modele językowe i budowałem automatyzacje w n8n.","Najczęściej piszę backendy w ASP.NET Core z PostgreSQL i aplikacje desktopowe w Avalonii. Lubię mieć za kodem prawdziwe testy. Mówię po polsku i po angielsku (B2).","Ostatnio buduję też aplikację desktopową do analizy i wizualizacji sygnału audio, więc muzyka tak naprawdę nigdy nie odeszła."]},
- music:{en:["For me it started with music. I spent years making beats in FL Studio, and not only for myself: I sold them online, talked with artists and ran my own online store. It was real work with customers, an offer and sales.","At some point the plugins got more interesting than the beats. I wanted to know how they actually work and what's going on under the hood.","That curiosity pulled me into C# and .NET, and from there into building web and desktop apps. Right now I'm working on a desktop app for audio signal analysis and visualization."],
-        pl:["U mnie zaczęło się od muzyki. Przez lata robiłem bity w FL Studio i nie tylko dla siebie: sprzedawałem je online, rozmawiałem z artystami i prowadziłem własny sklep internetowy. To była prawdziwa praca z klientami, ofertą i sprzedażą.","W pewnym momencie wtyczki zrobiły się ciekawsze niż same bity. Chciałem wiedzieć, jak naprawdę działają i co dzieje się pod maską.","Ta ciekawość wciągnęła mnie w C# i .NET, a potem w tworzenie aplikacji webowych i desktopowych. Dziś buduję aplikację desktopową do analizy i wizualizacji sygnału audio."]},
+ music:{en:["<b>For me it started with music.</b> I spent years making beats in FL Studio, and not only for myself: I sold them online, talked with artists and ran my own online store. It was real work with customers, an offer and sales.","At some point the plugins got more interesting than the beats. I wanted to know how they actually work and what's going on under the hood.","That curiosity pulled me into C# and .NET, and from there into building web and desktop apps. Right now I'm working on a desktop app for audio signal analysis and visualization."],
+        pl:["<b>U mnie zaczęło się od muzyki.</b> Przez lata robiłem bity w FL Studio i nie tylko dla siebie: sprzedawałem je online, rozmawiałem z artystami i prowadziłem własny sklep internetowy. To była prawdziwa praca z klientami, ofertą i sprzedażą.","W pewnym momencie wtyczki zrobiły się ciekawsze niż same bity. Chciałem wiedzieć, jak naprawdę działają i co dzieje się pod maską.","Ta ciekawość wciągnęła mnie w C# i .NET, a potem w tworzenie aplikacji webowych i desktopowych. Dziś buduję aplikację desktopową do analizy i wizualizacji sygnału audio."]},
  exp:{en:["<b>KODA.AI, September and October 2026.</b> A 160-hour internship as a Generative Prompt Engineer intern. I worked on KODA's conversational AI platform: testing chatbots and voicebots, validating prompts and knowledge bases, and checking how conversations flow. I compared language models on response quality, consistency and fit for client use cases, and wrote up what I found as QA documentation. I also designed an R&amp;D analyzer that finds where a voicebot fails customers, so the bot can be retrained. I also built and tested n8n workflows and API integrations that automate business processes, and documented how they work and what they need to be deployed. I delivered tasks against requirements, kept track of my progress and took the team's feedback on board.","<b>St. Luke's Hospital in Bolesławiec, May 2021.</b> A 160-hour placement as an IT support intern, part of my IT technician qualification. I helped the hospital's IT team with their day-to-day technical tasks: setting up PCs and helping with hardware, peripherals and basic troubleshooting."],
        pl:["<b>KODA.AI, wrzesień i październik 2026.</b> Praktyki, 160 godzin, jako Generative Prompt Engineer. Pracowałem na platformie konwersacyjnej AI KODA: testowałem chatboty i voicebooty, sprawdzałem prompty i bazy wiedzy oraz to, jak przebiegają rozmowy. Porównywałem modele językowe pod kątem jakości i spójności odpowiedzi oraz dopasowania do zastosowań klientów, a wnioski spisywałem w dokumentacji QA. Zaprojektowałem też analizator R&amp;D, który wskazuje, w czym voicebot zawodzi klientów, żeby można było go douczyć. Tworzyłem też i testowałem przepływy n8n oraz integracje API automatyzujące procesy biznesowe, z dokumentacją ich działania i wymagań wdrożeniowych. Zadania realizowałem zgodnie z wymaganiami, dokumentowałem postępy i uwzględniałem uwagi zespołu.","<b>Szpital św. Łukasza w Bolesławcu, maj 2021.</b> Praktyki, 160 godzin, jako praktykant IT, w ramach kwalifikacji technik informatyk. Wspierałem szpitalny dział IT w codziennych zadaniach: konfigurowałem komputery i pomagałem przy sprzęcie, urządzeniach peryferyjnych i podstawowej diagnostyce."]},
  edu:{en:["<b>Wrocław University of Science and Technology, 2022 until now.</b> Technical Computer Science (B.Eng.), specialising in Information Systems in Medicine, graduating in February 2027. Programming, databases, information systems, networking, testing, and technical and project documentation.","<b>Electronic Schools Complex in Bolesławiec, 2018 to June 2022.</b> IT technician diploma, specialising in computer networks and systems administration. We covered computer systems, networking, peripheral devices, database basics and building websites, along with Microsoft 365 tools. I did a hands-on IT internship at St. Luke's Hospital, supporting on-site infrastructure and end-user systems."],
@@ -1073,8 +1074,9 @@ const pat={kick:[0,3,8,10,14],snare:[4,12],hat:[0,2,4,6,8,10,12,14]};
 function seqRows(){
  return ['kick','snare','hat'].map(k=>`<div class="seqrow" data-row="${k}"><span class="lab">${T(k)}</span>${Array.from({length:16},(_,s)=>`<button data-s="${s}" class="${pat[k].includes(s)?'on':''}" aria-label="${T(k)} ${s+1}" aria-pressed="${pat[k].includes(s)}"></button>`).join('')}</div>`).join('');
 }
+function beatLabel(){return IC(beating?'pause':'play')+`<span class="sw"><span${beating?' class="off"':''}>${T('beat_play')}</span><span${beating?'':' class="off"'}>${T('beat_stop')}</span></span>`;}
 function musicFront(){
- return `<div class="bd mus"><div class="tx"><p style="font:400 clamp(19px,2.7cqw,25px)/1.28 var(--disp)">${I18N[LANG].about_p}</p></div><div class="seq"><div class="seqs">${seqRows()}</div><div class="seqbar"><button class="btn" data-beat>${IC(beating?'pause':'play')}<span>${beating?T('beat_stop'):T('beat_play')}</span></button><button class="btn line" data-clear>${T('beat_clear')}</button><span class="lab">${T('beat_p')}</span></div></div></div>`;
+ return `<div class="bd mus"><div class="tx"><p style="font:400 clamp(19px,2.7cqw,25px)/1.28 var(--disp)">${I18N[LANG].about_p}</p></div><div class="seq"><div class="seqs">${seqRows()}</div><div class="seqbar"><button class="btn" data-beat>${beatLabel()}</button><button class="btn line" data-clear>${T('beat_clear')}</button><span class="lab">${T('beat_p')}</span></div></div></div>`;
 }
 function projFront(w){
  const L=I18N[LANG],sh=w.shots&&w.shots[w.id==='pharmacy'?Math.min(1,w.shots.length-1):0];
@@ -1129,7 +1131,7 @@ function layout(){
  els.forEach((el,i)=>{
   const d=i-cur,j=rest(i);let tx=0,ty=0,rot=0,sc=1,op=1,z=100;
   if(d>0){const k=Math.min(d,4);tx=k*(narrow?6:15)+j.x*2;ty=-k*(narrow?4:5);rot=k*.45+j.r*.5;sc=1-k*.01;op=d>5?0:1;z=100-d;if(intro){tx=ty=rot=0;op=0;}}
-  else if(d<0){const k=Math.min(-d,4);tx=narrow?-(w*1.2+k*8):-(w*.6+k*12)+j.x*14;ty=k*7+j.y*9;rot=-5-k*1.2+j.r*2.4;sc=.9-k*.01;op=-d>5?0:1;z=50+d;}
+  else if(d<0){const k=Math.min(-d,4);tx=narrow?-(w*1.2+k*8):-(w*.93+k*12)+j.x*14;ty=k*7+j.y*9;rot=-5-k*1.2+j.r*2.4;sc=.9-k*.01;op=-d>5?0:1;z=50+d;}
   else if(!intro)rot=j.r*.26+landR;
   if(PHYS)aim(i,tx,ty,rot,sc,z,d,now);
   else{el.style.transform=`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(${sc})`;el.style.zIndex=z;}
@@ -1143,8 +1145,8 @@ function layout(){
  if(PHYS)wake();
 }
 function setHash(){const c=CARDS[cur];try{history.replaceState(null,'',c.id==='cover'?location.pathname+location.search:'#'+(c.hash||'card/'+c.id));}catch(_){}}
-function go(i,noHash,force){i=Math.max(0,Math.min(CARDS.length-1,i));if(i===cur)return;stopBeat();cur=i;landR=(Math.random()-.5)*.3;layout();paper('slide',force);if(!noHash)setHash();}
-function toggleFlip(){const id=CARDS[cur].id;if(!CARDS[cur].back)return;stopBeat();flip.has(id)?flip.delete(id):flip.add(id);layout();paper('flip');}
+function go(i,noHash,force){i=Math.max(0,Math.min(CARDS.length-1,i));if(i===cur)return;stopBeat();const mv=i>cur?cur:i;cur=i;landR=(Math.random()-.5)*.3;layout();if(B[mv])B[mv].land=force||1;paper('slide',force);if(!noHash)setHash();}
+function toggleFlip(){const id=CARDS[cur].id;if(!CARDS[cur].back)return;stopBeat();flip.has(id)?flip.delete(id):flip.add(id);layout();if(B[cur])B[cur].turn=1;paper('flip');}
 function applyHash(){
  const m=location.hash.match(/^#(project|notes|card)\/([\w-]+)/);if(!m)return false;
  let id=m[2],f=false;if(m[1]==='project'&&['portfolio','tsp','vocab','restaurant','vaccination'].includes(id))id='more';
@@ -1167,17 +1169,17 @@ function aim(i,x,y,r,s,z,d,now){
  if(!b){b=B[i]={el:els[i],inn:$('.inner',els[i]),shd:$('.shd',els[i]),x,y,r,s,l:0,a,ox:0,oy:0,vx:0,vy:0,vr:0,vs:0,vl:0,va:0,vox:0,voy:0,h:{x:0,r:0,s:0,l:0,ox:0,oy:0},z:CALM,zr:CALM,at:0,held:false,still:false,zt:z,zp:false,zd:0};b.el.style.zIndex=z;}
  const far=Math.abs(b.x-x);
  b.at=b.still&&!fan?now+Math.min(150,Math.max(0,Math.abs(d)-1)*30):fan?now+i*70:0;
- /* a card that drops in the pile stays on top until it is halfway there, then tucks under */
- if(z<b.zt&&far>24){b.zp=true;b.zd=far;b.el.style.zIndex=130;}else if(!b.zp||z>=b.zt){b.zp=false;b.el.style.zIndex=z;}
+ /* a card on its way to the pile stays on top until it has cleared the deck */
+ if(z<b.zt&&far>60){b.zp=true;b.zd=far;b.el.style.zIndex=130;}else if(!b.zp||z>=b.zt){b.zp=false;b.el.style.zIndex=z;}
  b.zt=z;b.tx=x;b.ty=y;b.tr=r;b.ts=s;b.ta=a;b.still=false;
 }
 function pull(b,p,v,t,k,z){const f=k*(t-b[p])-2*z*Math.sqrt(k)*b[v];b[v]+=f*STEP;b[p]+=b[v]*STEP;return Math.abs(t-b[p])>.02||Math.abs(b[v])>.6;}
 function stepCard(b,now){
  if(b.still||b.at>now)return;
  const h=b.h;let m=false;
- if(!b.held){m=pull(b,'x','vx',b.tx+h.x,STIFF,b.z)|m;m=pull(b,'y','vy',b.ty,STIFF,b.z)|m;}else m=true;
+ if(!b.held){m=pull(b,'x','vx',b.tx+h.x,STIFF,b.z)|m;m=pull(b,'y','vy',b.ty,STIFF,b.z)|m;if(b.land&&Math.abs(b.tx-b.x)<8){paper('land1',b.land*Math.min(1.5,.7+Math.abs(b.vx)/1800));b.land=0;}}else m=true;
  m=pull(b,'r','vr',b.tr+h.r,STIFF,b.zr)|m;m=pull(b,'s','vs',b.ts+h.s,STIFF,CALM)|m;m=pull(b,'l','vl',h.l,260,.7)|m;
- m=pull(b,'ox','vox',h.ox,150,.8)|m;m=pull(b,'oy','voy',h.oy,150,.8)|m;m=pull(b,'a','va',b.ta,125,.74)|m;
+ m=pull(b,'ox','vox',h.ox,150,.8)|m;m=pull(b,'oy','voy',h.oy,150,.8)|m;m=pull(b,'a','va',b.ta,125,.74)|m;if(b.turn&&Math.abs(b.ta-b.a)<5){paper('land2');b.turn=0;}
  if(!m){b.x=b.tx+h.x;b.y=b.ty;b.r=b.tr+h.r;b.s=b.ts+h.s;b.l=h.l;b.a=b.ta;b.z=b.zr=CALM;b.still=true;b.drawn=false;}
 }
 function drawCard(b){
@@ -1187,7 +1189,7 @@ function drawCard(b){
  b.shd.style.transform=`translate(${(7+L*.9-b.ox).toFixed(2)}px,${(8+L-b.oy).toFixed(2)}px) scaleX(${Math.max(.03,Math.abs(Math.cos(rad))).toFixed(3)})`;
  b.inn.style.transform=b.a<.05?'none':Math.abs(b.a-180)<.05?'rotateY(180deg)':`translateZ(${(up*90).toFixed(1)}px) rotateX(${(up*4).toFixed(2)}deg) rotateY(${b.a.toFixed(2)}deg) rotateZ(${(up*-1.6).toFixed(2)}deg)`;
  b.el.classList.toggle('bk',b.a>90);
- if(b.zp&&Math.abs(b.x-b.tx)<=Math.max(2,b.zd*.5)){b.zp=false;b.el.style.zIndex=b.zt;}
+ if(b.zp&&Math.abs(b.x-b.tx)<=60){b.zp=false;b.el.style.zIndex=b.zt;}
 }
 function tick(now){
  owed+=Math.min(.05,(now-clock)/1000);clock=now;
@@ -1200,7 +1202,7 @@ function wake(){for(const b of B)if(b)b.still=false;if(!spin){clock=performance.
 function hover(i,e){
  B.forEach((b,n)=>{if(!b||b.held)return;const h=b.h;h.x=h.r=h.l=h.ox=h.oy=0;
   if(n!==i)return;
-  if(n===cur){const q=deck.getBoundingClientRect(),px=Math.max(-1,Math.min(1,((e.clientX-q.left)/q.width-.5)*2)),py=Math.max(-1,Math.min(1,((e.clientY-q.top)/q.height-.5)*2));h.l=4;h.ox=px*3;h.oy=py*2;h.r=px*.3;}
+  if(n===cur){const q=deck.getBoundingClientRect(),px=Math.max(-1,Math.min(1,((e.clientX-q.left)/q.width-.5)*2)),py=Math.max(-1,Math.min(1,((e.clientY-q.top)/q.height-.5)*2));h.l=4;if(!e.target.closest('.seq,input,textarea')){h.ox=px*3;h.oy=py*2;h.r=px*.3;}}
   else if(n<cur){h.x=n===cur-1?22:12;h.r=n===cur-1?2.2:1;h.l=3;}
   else h.x=9;});
  wake();
@@ -1367,9 +1369,11 @@ function paper(kind,force){
  if(!snd)return;
  try{const a=A(),t=a.currentTime+.005,r=.9+Math.random()*.2;
   const f=force||1;
-  if(kind==='slide'){crackle(a,t,.12*r,650,1500*f,.5*f);thud(a,t+.105*r,.38*f,700);}
+  if(kind==='slide'){crackle(a,t,.12*r,650,1500*f,.5*f);if(!PHYS)thud(a,t+.105*r,.38*f,700);}
+  else if(kind==='land1'){thud(a,t,Math.min(.6,.38*f),700);}
+  else if(kind==='land2'){thud(a,t,.6,560);}
   else if(kind==='drop'){thud(a,t+.1,.3,620);}
-  else if(kind==='flip'){crackle(a,t,.2*r,220,1500,.55);thud(a,t+.19*r,.6,560);}
+  else if(kind==='flip'){crackle(a,t,.2*r,220,1500,.55);if(!PHYS)thud(a,t+.19*r,.6,560);}
   else if(kind==='lang'){crackle(a,t,.07,900,1100,.4);crackle(a,t+.09,.07,900,1100,.4);}
   else if(kind==='open'){crackle(a,t,.4*r,180,900,.5);thud(a,t+.04,.25,500);}
   else if(kind==='close'){crackle(a,t,.18*r,500,1100,.45);thud(a,t+.16,.45,600);}
@@ -1415,7 +1419,7 @@ function sched(){if(!beating)return;const a=A();
 function paintHot(){if(!beating){raf=0;return;}const a=ac;let cur=null;while(q.length&&q[0].t<=a.currentTime+.01){cur=q.shift().s;}
  if(cur!==null&&cur!==lastHot){lastHot=cur;$$('.seqrow button.hot').forEach(x=>x.classList.remove('hot'));$$('.seqrow').forEach(r=>{const x=r.querySelector(`[data-s="${cur}"]`);if(x)x.classList.add('hot');});}
  raf=requestAnimationFrame(paintHot);}
-function beatUI(){const bt=$('[data-beat]');if(bt){bt.innerHTML=IC(beating?'pause':'play')+'<span>'+(beating?T('beat_stop'):T('beat_play'))+'</span>';}}
+function beatUI(){const bt=$('[data-beat]');if(bt)bt.innerHTML=beatLabel();}
 function toggleBeat(){beating=!beating;
  if(beating){const a=A();step=0;q=[];lastHot=-1;nextT=a.currentTime+.06;sched();tm=setInterval(sched,25);raf=requestAnimationFrame(paintHot);}
  else{clearInterval(tm);cancelAnimationFrame(raf);raf=0;q=[];lastHot=-1;$$('.seqrow button.hot').forEach(x=>x.classList.remove('hot'));}
@@ -1460,7 +1464,7 @@ function deal(){
   let idle=null;en.onfinish=()=>{if(!started)idle=d.animate([{transform:'rotate(-1deg) scale(1)'},{transform:'rotate(-.3deg) scale(1.006)'},{transform:'rotate(-1deg) scale(1)'}],{duration:3200,iterations:Infinity,easing:'ease-in-out'});};
   const ev=['pointerdown','keydown','touchstart'];
   const go=real=>{if(started)return;started=true;clearTimeout(tm);ev.forEach(n=>window.removeEventListener(n,onG,true));
-   if(idle)idle.cancel();en.cancel();document.body.classList.remove('dealing');const h=d.querySelector('.dh');if(h)h.remove();
+   if(idle)idle.cancel();en.cancel();document.body.classList.remove('dealing');
    d.animate([{transform:'rotate(-1deg)'},{transform:'rotate(0deg) translateY(5px)'},{transform:'none'}],{duration:220,fill:'forwards'});
    if(real){paper('land');setTimeout(turn,200);}else setTimeout(turn,240);};
   const onG=()=>go(true);
