@@ -546,6 +546,24 @@ body.painting,body.painting *{cursor:cell !important;-webkit-user-select:none;us
 .seqrow button:active{transform:scale(.92);}
 .pt{display:none;} @media (hover:none){.ph{display:none;} .pt{display:inline;}}
 
+/* ---------- weight: springs move the cards, the shadow is its own layer so it can stay on the table ---------- */
+.shd{display:none;}
+.card img{-webkit-user-drag:none;}
+body.phys .card,body.phys .card.next{transition:opacity .5s;}
+body.phys .card.next{transition:none;}
+body.phys .inner,body.phys .face{transition:none;}
+body.phys .inner{will-change:transform;}
+body.phys .face{box-shadow:1px 1px 0 var(--edge),2px 2px 0 var(--edge),3px 3px 0 var(--edge),4px 4px 0 var(--edge);}
+body.phys .shd{display:block;position:absolute;inset:0;border-radius:18px;background:var(--shadow);transform:translate(7px,8px);pointer-events:none;will-change:transform;}
+body.phys .card:not(.bk) .face.front,body.phys .card.bk .face.back{visibility:visible;}
+body.phys .card:not(.bk) .face.back,body.phys .card.bk .face.front{visibility:hidden;}
+body.grabbing,body.grabbing *{cursor:grabbing !important;-webkit-user-select:none;user-select:none;}
+body.phys .card.past .face::after{opacity:calc(.3*var(--dim,1));}
+body.phys .card[style*="--dim"] .face::after{transition:none;}
+.side{transition:background .15s,color .15s,box-shadow .15s,opacity .2s;}
+body.grabbing .side{opacity:0;}
+body.phys #deck *{touch-action:pan-y;}
+
 </style>
 </head>
 <body>
@@ -1101,34 +1119,150 @@ const deckEl=$('#cards'),deck=$('#deck'),rail=$('#rail');
 let els=[];
 function render(){
  CARDS=defs();
- deckEl.innerHTML=CARDS.map((c,i)=>`<section class="card" data-id="${c.id}" aria-label="${pad(i+1)} ${esc(c.title)}"><div class="inner">${face(c,i,'front',c.front(i))}${c.back?face(c,i,'back',c.back(i)):''}</div></section>`).join('');
- els=$$('.card',deckEl);hand(deckEl);
+ deckEl.innerHTML=CARDS.map((c,i)=>`<section class="card" data-id="${c.id}" aria-label="${pad(i+1)} ${esc(c.title)}"><i class="shd"></i><div class="inner">${face(c,i,'front',c.front(i))}${c.back?face(c,i,'back',c.back(i)):''}</div></section>`).join('');
+ els=$$('.card',deckEl);B=[];hand(deckEl);
  rail.innerHTML=CARDS.map((c,i)=>`<button class="tab" data-go="${i}" aria-label="${pad(i+1)} ${esc(c.title)}" title="${esc(c.title)}"><span>${pad(i+1)}</span><em></em></button>`).join('');
  layout();
 }
 function layout(){
- const w=deck.offsetWidth,narrow=innerWidth<=720;
+ const w=deck.offsetWidth,narrow=innerWidth<=720,now=performance.now();
  els.forEach((el,i)=>{
-  const d=i-cur;let tx=0,ty=0,rot=0,sc=1,op=1,z=100;
-  if(d>0){const k=Math.min(d,4);tx=k*(narrow?6:15);ty=-k*(narrow?4:5);rot=k*.45;sc=1-k*.01;op=d>5?0:1;z=100-d;if(intro){tx=ty=rot=0;op=0;}}
-  else if(d<0){const k=Math.min(-d,4);tx=narrow?-(w*1.2+k*8):-(w*.6+k*12);ty=k*7;rot=-5-k*1.2;sc=.9-k*.01;op=-d>5?0:1;z=50+d;}
-  el.style.transform=`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(${sc})`;
-  el.style.opacity=op;el.style.zIndex=z;el.style.pointerEvents=op?'':'none';
+  const d=i-cur,j=rest(i);let tx=0,ty=0,rot=0,sc=1,op=1,z=100;
+  if(d>0){const k=Math.min(d,4);tx=k*(narrow?6:15)+j.x*2;ty=-k*(narrow?4:5);rot=k*.45+j.r*.5;sc=1-k*.01;op=d>5?0:1;z=100-d;if(intro){tx=ty=rot=0;op=0;}}
+  else if(d<0){const k=Math.min(-d,4);tx=narrow?-(w*1.2+k*8):-(w*.6+k*12)+j.x*14;ty=k*7+j.y*9;rot=-5-k*1.2+j.r*2.4;sc=.9-k*.01;op=-d>5?0:1;z=50+d;}
+  else if(!intro)rot=j.r*.26+landR;
+  if(PHYS)aim(i,tx,ty,rot,sc,z,d,now);
+  else{el.style.transform=`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(${sc})`;el.style.zIndex=z;}
+  el.style.opacity=op;el.style.pointerEvents=op?'':'none';
   el.classList.toggle('past',d<0);el.classList.toggle('next',d>0);
   el.classList.toggle('flipped',flip.has(CARDS[i].id));
   const inn=$('.inner',el);inn.inert=d!==0;el.setAttribute('aria-hidden',d!==0?'true':'false');
  });
  $$('.tab',rail).forEach((t,i)=>{const e=$('em',t);if(i===cur){t.setAttribute('aria-current','true');e.textContent=CARDS[i].title;}else{t.removeAttribute('aria-current');e.textContent='';}});
  const at=$('.tab[aria-current]',rail);if(at&&at.scrollIntoView)at.scrollIntoView({inline:'center',block:'nearest'});
+ if(PHYS)wake();
 }
 function setHash(){const c=CARDS[cur];try{history.replaceState(null,'',c.id==='cover'?location.pathname+location.search:'#'+(c.hash||'card/'+c.id));}catch(_){}}
-function go(i,noHash){i=Math.max(0,Math.min(CARDS.length-1,i));if(i===cur)return;stopBeat();cur=i;layout();paper('slide');if(!noHash)setHash();}
+function go(i,noHash,force){i=Math.max(0,Math.min(CARDS.length-1,i));if(i===cur)return;stopBeat();cur=i;landR=(Math.random()-.5)*.3;layout();paper('slide',force);if(!noHash)setHash();}
 function toggleFlip(){const id=CARDS[cur].id;if(!CARDS[cur].back)return;stopBeat();flip.has(id)?flip.delete(id):flip.add(id);layout();paper('flip');}
 function applyHash(){
  const m=location.hash.match(/^#(project|notes|card)\/([\w-]+)/);if(!m)return false;
  let id=m[2],f=false;if(m[1]==='project'&&['portfolio','tsp','vocab','restaurant','vaccination'].includes(id))id='more';
  if(m[1]==='notes'){if(id==='edu'){f=true;}else if(['koda','hospital'].includes(id)){id='exp';f=true;}else if(id==='music')f=true;else if(id==='now'){id='skills';f=true;}}
  const i=CARDS.findIndex(c=>c.id===id);if(i<0)return false;cur=i;if(f)flip.add(id);return true;
+}
+/* ---------- weight ----------
+   Cards are moved by springs, stepped 240 times a second whatever the display rate, so a throw keeps
+   its speed and the same gesture gives the same motion on any screen. With reduced motion switched on
+   none of this runs and the cards use the plain CSS transitions. */
+const PHYS=!matchMedia('(prefers-reduced-motion:reduce)').matches,FINE=matchMedia('(hover:hover) and (pointer:fine)').matches;
+document.body.classList.toggle('phys',PHYS);
+const STEP=1/240,STIFF=210,CALM=.86;
+let B=[],fan=false,landR=0,spin=0,clock=0,owed=0,grab=null,dragged=false;
+/* every card has its own way of lying on the table, the same on every visit */
+const RESTS=[];
+function rest(i){if(!RESTS[i]){const r=rng(i*7919+31);RESTS[i]={r:r()*2-1,x:r()*2-1,y:r()*2-1};}return RESTS[i];}
+function aim(i,x,y,r,s,z,d,now){
+ let b=B[i];const a=flip.has(CARDS[i].id)?180:0;
+ if(!b){b=B[i]={el:els[i],inn:$('.inner',els[i]),shd:$('.shd',els[i]),x,y,r,s,l:0,a,ox:0,oy:0,vx:0,vy:0,vr:0,vs:0,vl:0,va:0,vox:0,voy:0,h:{x:0,r:0,s:0,l:0,ox:0,oy:0},z:CALM,zr:CALM,at:0,held:false,still:false,zt:z,zp:false,zd:0};b.el.style.zIndex=z;}
+ const far=Math.abs(b.x-x);
+ b.at=b.still&&!fan?now+Math.min(150,Math.max(0,Math.abs(d)-1)*30):fan?now+i*70:0;
+ /* a card that drops in the pile stays on top until it is halfway there, then tucks under */
+ if(z<b.zt&&far>24){b.zp=true;b.zd=far;b.el.style.zIndex=130;}else if(!b.zp||z>=b.zt){b.zp=false;b.el.style.zIndex=z;}
+ b.zt=z;b.tx=x;b.ty=y;b.tr=r;b.ts=s;b.ta=a;b.still=false;
+}
+function pull(b,p,v,t,k,z){const f=k*(t-b[p])-2*z*Math.sqrt(k)*b[v];b[v]+=f*STEP;b[p]+=b[v]*STEP;return Math.abs(t-b[p])>.02||Math.abs(b[v])>.6;}
+function stepCard(b,now){
+ if(b.still||b.at>now)return;
+ const h=b.h;let m=false;
+ if(!b.held){m=pull(b,'x','vx',b.tx+h.x,STIFF,b.z)|m;m=pull(b,'y','vy',b.ty,STIFF,b.z)|m;}else m=true;
+ m=pull(b,'r','vr',b.tr+h.r,STIFF,b.zr)|m;m=pull(b,'s','vs',b.ts+h.s,STIFF,CALM)|m;m=pull(b,'l','vl',h.l,260,.7)|m;
+ m=pull(b,'ox','vox',h.ox,150,.8)|m;m=pull(b,'oy','voy',h.oy,150,.8)|m;m=pull(b,'a','va',b.ta,125,.74)|m;
+ if(!m){b.x=b.tx+h.x;b.y=b.ty;b.r=b.tr+h.r;b.s=b.ts+h.s;b.l=h.l;b.a=b.ta;b.z=b.zr=CALM;b.still=true;b.drawn=false;}
+}
+function drawCard(b){
+ if(b.still&&b.drawn)return;b.drawn=b.still;
+ const rad=b.a*Math.PI/180,up=Math.max(0,Math.sin(rad)),L=b.l+up*16;
+ b.el.style.transform=`translate(${(b.x+b.ox-b.l*.9).toFixed(2)}px,${(b.y+b.oy-b.l).toFixed(2)}px) rotate(${b.r.toFixed(3)}deg) scale(${b.s.toFixed(4)})`;
+ b.shd.style.transform=`translate(${(7+L*.9-b.ox).toFixed(2)}px,${(8+L-b.oy).toFixed(2)}px) scaleX(${Math.max(.03,Math.abs(Math.cos(rad))).toFixed(3)})`;
+ b.inn.style.transform=b.a<.05?'none':Math.abs(b.a-180)<.05?'rotateY(180deg)':`translateZ(${(up*90).toFixed(1)}px) rotateX(${(up*4).toFixed(2)}deg) rotateY(${b.a.toFixed(2)}deg) rotateZ(${(up*-1.6).toFixed(2)}deg)`;
+ b.el.classList.toggle('bk',b.a>90);
+ if(b.zp&&Math.abs(b.x-b.tx)<=Math.max(2,b.zd*.5)){b.zp=false;b.el.style.zIndex=b.zt;}
+}
+function tick(now){
+ owed+=Math.min(.05,(now-clock)/1000);clock=now;
+ while(owed>=STEP){owed-=STEP;for(const b of B)if(b)stepCard(b,now);}
+ let live=false;for(const b of B)if(b){drawCard(b);live=live||!b.still;}
+ spin=live?requestAnimationFrame(tick):0;
+}
+function wake(){for(const b of B)if(b)b.still=false;if(!spin){clock=performance.now();owed=0;spin=requestAnimationFrame(tick);}}
+/* the card under the pointer answers it: the top card rises and leans to the pointer while its shadow stays where it was, pile and stack cards edge out */
+function hover(i,e){
+ B.forEach((b,n)=>{if(!b||b.held)return;const h=b.h;h.x=h.r=h.l=h.ox=h.oy=0;
+  if(n!==i)return;
+  if(n===cur){const q=deck.getBoundingClientRect(),px=Math.max(-1,Math.min(1,((e.clientX-q.left)/q.width-.5)*2)),py=Math.max(-1,Math.min(1,((e.clientY-q.top)/q.height-.5)*2));h.l=4;h.ox=px*3;h.oy=py*2;h.r=px*.3;}
+  else if(n<cur){h.x=n===cur-1?22:12;h.r=n===cur-1?2.2:1;h.l=3;}
+  else h.x=9;});
+ wake();
+}
+if(PHYS&&FINE){
+ deck.addEventListener('pointermove',e=>{if(intro||grab||e.pointerType!=='mouse')return;const cd=e.target.closest&&e.target.closest('.card');hover(cd?els.indexOf(cd):-1,e);});
+ deck.addEventListener('pointerleave',()=>{if(!grab&&!intro)hover(-1);});
+}
+/* grab the top card and throw it on the pile, or pull the last one back out */
+function carry(b,x,y){b.held=true;b.x=x;b.y=y;b.vx=b.vy=0;}
+function held(){
+ const g=grab,w=g.w,cb=B[cur],pb=B[cur-1],lean=Math.max(-7,Math.min(7,g.v*.004))*g.side;
+ if(g.i===cur&&g.dx<=0){
+  const end=cur===els.length-1,x=end?g.dx*.22:g.dx;
+  carry(cb,cb.tx+x,cb.ty+g.dy*(end?.08:.3));cb.h.r=lean+x/w*4*g.side;cb.h.l=16;
+  if(pb&&pb.held){pb.held=false;pb.h.r=pb.h.s=pb.h.l=0;pb.el.style.removeProperty('--dim');pb.zp=true;pb.zd=Math.abs(pb.x-pb.tx);}
+  g.p=0;return;
+ }
+ if(!pb){carry(cb,cb.tx+g.dx*.22,cb.ty+g.dy*.08);cb.h.l=16;g.p=0;return;}
+ const span=-pb.tx;let p=(g.i===cur?g.dx*1.5:g.dx)/span;p=p>1?1+(p-1)*.15:Math.max(-.06,p);const q=Math.max(0,Math.min(1,p));
+ carry(pb,pb.tx+span*p,pb.ty*(1-q)+g.dy*.2);pb.h.r=-pb.tr*q+lean;pb.h.s=(1-pb.ts)*q;pb.h.l=16*Math.min(1,q*3);pb.el.style.zIndex=150;pb.el.style.setProperty('--dim',1-q);
+ if(g.i===cur){carry(cb,cb.tx+g.dx*.06,cb.ty);cb.h.r=0;cb.h.l=0;}
+ g.p=p;
+}
+function letGo(){
+ const g=grab;if(!g)return;grab=null;document.body.classList.remove('grabbing');
+ const cb=B[cur],pb=B[cur-1];
+ [cb,pb].forEach(b=>{if(b){b.held=false;b.el.style.removeProperty('--dim');b.h.r=b.h.s=b.h.l=b.h.x=0;}});
+ if(!g.on){wake();return;}
+ dragged=true;setTimeout(()=>{dragged=false;},60);
+ const v=Math.max(-4200,Math.min(4200,g.v));let to=cur,mv=null;
+ if(g.i===cur&&g.dx<0){if(cur<els.length-1&&(g.dx<-g.w*.18||(v<-650&&g.dx<-24))){to=cur+1;mv=cb;}}
+ else if(pb&&(g.p>.38||(v>650&&g.dx>24))){to=cur-1;mv=pb;}
+ if(mv){mv.vx=v*(mv===pb&&g.i===cur?1.5:1);if(Math.abs(v)>900){mv.z=.6;mv.zr=.42;mv.vr+=v*.006*g.side;}go(to,false,Math.max(.6,Math.min(1.5,.6+Math.abs(v)/2600)));}
+ else{if(pb&&pb.el.style.zIndex==='150'){pb.zp=true;pb.zd=Math.abs(pb.x-pb.tx);}paper('drop');wake();}
+}
+if(PHYS){
+ deck.addEventListener('pointerdown',e=>{
+  if(intro||grab||!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0))return;
+  const cd=e.target.closest&&e.target.closest('.card');if(!cd)return;const i=els.indexOf(cd);
+  if(i!==cur&&i!==cur-1)return;
+  if(i===cur&&e.target.closest('button,a,input,textarea,label,.seq,.seqs'))return;
+  const q=cd.getBoundingClientRect();
+  grab={i,id:e.pointerId,x0:e.clientX,y0:e.clientY,lx:e.clientX,lt:e.timeStamp,v:0,dx:0,dy:0,p:0,on:false,side:(e.clientY-q.top)/q.height<.5?1:-1,w:deck.offsetWidth};
+  if(i===cur&&B[cur]){B[cur].h.l=9;wake();}
+ });
+ addEventListener('pointermove',e=>{
+  const g=grab;if(!g||e.pointerId!==g.id)return;
+  const dx=e.clientX-g.x0,dy=e.clientY-g.y0;
+  if(!g.on){
+   if(Math.abs(dy)>12&&Math.abs(dy)>Math.abs(dx)){letGo();return;}
+   if(Math.abs(dx)<7||Math.abs(dx)<Math.abs(dy)*1.2)return;
+   g.on=true;g.x0=e.clientX;g.y0=e.clientY;g.lx=e.clientX;g.lt=e.timeStamp;document.body.classList.add('grabbing');
+   const sel=window.getSelection&&getSelection();if(sel)sel.removeAllRanges();return;
+  }
+  const dt=Math.max(1,e.timeStamp-g.lt);g.v+=((e.clientX-g.lx)/dt*1000-g.v)*.35;g.lx=e.clientX;g.lt=e.timeStamp;
+  g.dx=dx;g.dy=dy;held();wake();
+ });
+ addEventListener('pointerup',e=>{if(grab&&e.pointerId===grab.id){if(grab.on&&e.timeStamp-grab.lt>90)grab.v=0;letGo();}});
+ addEventListener('pointercancel',e=>{if(grab&&e.pointerId===grab.id){grab.v=0;grab.p=0;grab.dx=0;letGo();}});
+ deck.addEventListener('click',e=>{if(dragged){e.stopPropagation();e.preventDefault();}},true);
+ deck.addEventListener('dragstart',e=>e.preventDefault());
 }
 /* ---------- events ---------- */
 deck.addEventListener('click',e=>{
@@ -1152,7 +1286,7 @@ addEventListener('keydown',e=>{
  else if(e.key==='Home')go(0);else if(e.key==='End')go(CARDS.length-1);
 });
 let tx0=null,ty0=0;
-deck.addEventListener('touchstart',e=>{if(e.target.closest&&e.target.closest('.seqs')){tx0=null;return;}tx0=e.touches[0].clientX;ty0=e.touches[0].clientY;},{passive:true});
+deck.addEventListener('touchstart',e=>{if(PHYS||e.target.closest&&e.target.closest('.seqs')){tx0=null;return;}tx0=e.touches[0].clientX;ty0=e.touches[0].clientY;},{passive:true});
 deck.addEventListener('touchend',e=>{if(tx0==null)return;const dx=e.changedTouches[0].clientX-tx0,dy=e.changedTouches[0].clientY-ty0;tx0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(cur+(dx<0?1:-1));},{passive:true});
 addEventListener('resize',layout);
 addEventListener('hashchange',()=>{if(applyHash()){layout();}});
@@ -1229,10 +1363,12 @@ function thud(a,t,gain,f){const s=a.createBufferSource();s.buffer=wn(a);const fl
 /* switch: a hard plastic snap, then the lower thock of the lever going over */
 function snap(a,t,f,gain){const s=a.createBufferSource();s.buffer=wn(a);const b=a.createBiquadFilter();b.type='bandpass';b.frequency.value=f;b.Q.value=4;const g=a.createGain();g.gain.setValueAtTime(gain,t);g.gain.exponentialRampToValueAtTime(.0001,t+.014);s.connect(b);b.connect(g);g.connect(master);s.start(t,Math.random()*.8,.02);
  const o=a.createOscillator(),og=a.createGain();o.type='triangle';o.frequency.setValueAtTime(f*.62,t);o.frequency.exponentialRampToValueAtTime(f*.4,t+.03);og.gain.setValueAtTime(gain*.22,t);og.gain.exponentialRampToValueAtTime(.0001,t+.035);o.connect(og);og.connect(master);o.start(t);o.stop(t+.04);}
-function paper(kind){
+function paper(kind,force){
  if(!snd)return;
  try{const a=A(),t=a.currentTime+.005,r=.9+Math.random()*.2;
-  if(kind==='slide'){crackle(a,t,.12*r,650,1500,.5);thud(a,t+.105*r,.38,700);}
+  const f=force||1;
+  if(kind==='slide'){crackle(a,t,.12*r,650,1500*f,.5*f);thud(a,t+.105*r,.38*f,700);}
+  else if(kind==='drop'){thud(a,t+.1,.3,620);}
   else if(kind==='flip'){crackle(a,t,.2*r,220,1500,.55);thud(a,t+.19*r,.6,560);}
   else if(kind==='lang'){crackle(a,t,.07,900,1100,.4);crackle(a,t+.09,.07,900,1100,.4);}
   else if(kind==='open'){crackle(a,t,.4*r,180,900,.5);thud(a,t+.04,.25,500);}
@@ -1300,7 +1436,7 @@ function deal(){
    d.remove();
    e.onfinish=()=>{
     els.forEach((el,i)=>{el.style.transitionDelay=(i*70)+'ms';});
-    intro=false;layout();paper('riffle');
+    intro=false;fan=true;layout();fan=false;paper('riffle');
     setTimeout(()=>els.forEach(el=>{el.style.transitionDelay='';}),1400);
    };
   };
