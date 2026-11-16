@@ -46,7 +46,7 @@ This is the portfolio of Robert Tworek, a Technical Computer Science student at 
 
 - **Flip cards.** Every card with more to say has a back, written as a short note.
 - **Cards with weight.** Grab the top card and throw it on the pile, or pull the last one back out. Movement is driven by springs stepped at a fixed rate, so it behaves the same on any display; with reduced motion switched on the cards use plain transitions instead.
-- **Ink.** The pen lines of a card are drawn the first time the card is on top, and the note on its back is written line by line the first time it is turned over, with the highlighter following the pen.
+- **Ink.** The pen lines of a card are drawn the first time the card is on top, and the note on its back is written line by line the first time it is turned over, with the highlighter following the pen. Screenshots are stuck on with tape after the text, and the "Open to work" sticker can be peeled off and moved; its place is remembered.
 - **Light switch.** Flips between light and dark. Each flip moves to the next variant: orange and beige, pink and beige, yellow and brown for light; espresso, wine and umber for dark. The choice is remembered.
 - **Live GitHub list.** On load, every five minutes and when the tab regains focus, the page reads public repositories of `tworekrobert` from the GitHub API and adds new non-fork repositories to the "Other projects" card. The last result is cached in `localStorage`, so the card still works when the API limit is reached.
 - **Sequencer.** Scheduled on the Web Audio clock, so the beat stays steady. The playhead follows what you hear, clicking a square plays that drum, and the beat stops when you flip or leave the card.

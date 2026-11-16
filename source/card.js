@@ -151,7 +151,7 @@ function coverFront(){
  const chips=[L.w_c1,L.w_c4].map(c=>`<span class="chip">${c}</span>`).join('');
  const grp={};const fp=CARDS.findIndex(c=>c.hash&&c.hash.startsWith('project/'));grp[fp]=T('g_main');grp[CARDS.findIndex(c=>c.id==='music')]=T('g_me');
  const toc=CARDS.map((c,i)=>i?(grp[i]?`<div class="grp">${grp[i]}</div>`:'')+`<button data-go="${i}"><span class="t">${esc(c.title)}</span></button>`:'').join('');
- return `<div class="bd cover"><div class="left"><div><h1 class="name"><span>${T('hi1')}</span><span>${T('hi2')}</span></h1><p class="role">${T('intro')}</p></div><div class="sticker"><span>${T('stamp')}<small>${T('stamp_sub')}</small></span></div></div><nav class="toc" aria-label="${T('toc')}">${toc}</nav></div>`;
+ return `<div class="bd cover"><div class="left"><div><h1 class="name"><span>${T('hi1')}</span><span>${T('hi2')}</span></h1><p class="role">${T('intro')}</p></div><div class="sticker"${stuckAt()}><span>${T('stamp')}<small>${T('stamp_sub')}</small></span></div></div><nav class="toc" aria-label="${T('toc')}">${toc}</nav></div>`;
 }
 function coverBack(){return noteBack('cover');}
 const pat={kick:[0,3,8,10,14],snare:[4,12],hat:[0,2,4,6,8,10,12,14]};
@@ -229,8 +229,8 @@ function layout(){
  if(PHYS){wake();if(!intro)ink(cur);}
 }
 function setHash(){const c=CARDS[cur];try{history.replaceState(null,'',c.id==='cover'?location.pathname+location.search:'#'+(c.hash||'card/'+c.id));}catch(_){}}
-function go(i,noHash,force){i=Math.max(0,Math.min(CARDS.length-1,i));if(i===cur)return;stopBeat();const mv=i>cur?cur:i;cur=i;landR=(Math.random()-.5)*.3;layout();if(B[mv])B[mv].land=force||1;paper('slide',force);if(!noHash)setHash();}
-function toggleFlip(){const id=CARDS[cur].id;if(!CARDS[cur].back)return;stopBeat();flip.has(id)?flip.delete(id):flip.add(id);if(PHYS&&flip.has(id))write(cur);layout();if(B[cur])B[cur].turn=1;paper('flip');}
+function go(i,noHash,force){i=Math.max(0,Math.min(CARDS.length-1,i));if(i===cur)return;stopBeat();const mv=i>cur?cur:i;if(PHYS)settle(cur);cur=i;landR=(Math.random()-.5)*.3;layout();if(B[mv])B[mv].land=force||1;paper('slide',force);if(!noHash)setHash();}
+function toggleFlip(){const id=CARDS[cur].id;if(!CARDS[cur].back)return;stopBeat();flip.has(id)?flip.delete(id):flip.add(id);if(PHYS){flip.has(id)?write(cur):settle(cur);}layout();if(B[cur])B[cur].turn=1;paper('flip');}
 function applyHash(){
  const m=location.hash.match(/^#(project|notes|card)\/([\w-]+)/);if(!m)return false;
  let id=m[2],f=false;if(m[1]==='project'&&['portfolio','tsp','vocab','restaurant','vaccination'].includes(id))id='more';
@@ -328,7 +328,7 @@ if(PHYS){
   if(intro||grab||!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0))return;
   const cd=e.target.closest&&e.target.closest('.card');if(!cd)return;const i=els.indexOf(cd);
   if(i!==cur&&i!==cur-1)return;
-  if(i===cur&&e.target.closest('button,a,input,textarea,label,.seq,.seqs'))return;
+  if(i===cur&&e.target.closest('button,a,input,textarea,label,.seq,.seqs,.sticker'))return;
   const q=cd.getBoundingClientRect();
   grab={i,id:e.pointerId,x0:e.clientX,y0:e.clientY,lx:e.clientX,lt:e.timeStamp,v:0,dx:0,dy:0,p:0,on:false,side:(e.clientY-q.top)/q.height<.5?1:-1,w:deck.offsetWidth};
   if(i===cur&&B[cur]){B[cur].h.l=9;wake();}
@@ -358,7 +358,7 @@ const PENNED='.hd .sp,.toc button,.links a,.does li,.chips .chip,.ent,.sk,.pb h5
 function ink(i){
  const el=els[i],id=CARDS[i].id;if(!el||!el.classList.contains('fresh'))return;
  inked.add(id);$$(PENNED,el).forEach((e,n)=>e.style.setProperty('--n',Math.min(n,14)));
- el.classList.remove('fresh');el.classList.add('draw');setTimeout(()=>el.classList.remove('draw'),2600);
+ el.classList.remove('fresh');el.classList.add('draw');if($('.face.front .plate:not(.art)',el))setTimeout(()=>paper('stick'),330);setTimeout(()=>el.classList.remove('draw'),2600);
 }
 function write(i){
  const el=els[i],key=CARDS[i].id+LANG,note=el&&$('.face.back .note',el);if(!note||written.has(key))return;written.add(key);
@@ -366,11 +366,42 @@ function write(i){
  texts.forEach(t=>{const f=document.createDocumentFragment();t.nodeValue.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w)){f.appendChild(document.createTextNode(w));return;}const sp=document.createElement('span');sp.className='w';sp.textContent=w;f.appendChild(sp);});t.parentNode.replaceChild(f,t);});
  const ws=$$('.w',note),lines=[];let ln=null,pt=-1e9,pl=1e9;
  ws.forEach(w=>{const t=w.offsetTop,l=w.offsetLeft;if(Math.abs(t-pt)>w.offsetHeight*.5||l<pl-40){ln={x0:l,x1:l+w.offsetWidth,ws:[]};lines.push(ln);}ln.ws.push(w);ln.x1=Math.max(ln.x1,l+w.offsetWidth);pt=t;pl=l;});
- const per=Math.max(55,Math.min(130,1700/lines.length));
- lines.forEach((L,k)=>{const span=Math.max(1,L.x1-L.x0);L.ws.forEach(w=>{w.style.animationDelay=Math.round(300+k*per+(w.offsetLeft-L.x0)/span*per)+'ms';w.style.animationDuration=Math.round(Math.max(70,w.offsetWidth/span*per*1.3))+'ms';});});
+ const per=Math.max(45,Math.min(105,1350/lines.length)),T0=280,end=T0+lines.length*per,tm=note._tm=[];
+ lines.forEach((L,k)=>{const span=Math.max(1,L.x1-L.x0);L.ws.forEach(w=>{w.style.animationDelay=Math.round(T0+k*per+(w.offsetLeft-L.x0)/span*per)+'ms';w.style.animationDuration=Math.round(Math.max(60,w.offsetWidth/span*per*1.3))+'ms';});
+  tm.push(setTimeout(()=>paper('pen',per/1000),T0+k*per));});
  $$('b',note).forEach(b=>{const l=$$('.w',b).pop();if(l)b.style.setProperty('--hd',(parseFloat(l.style.animationDelay)+parseFloat(l.style.animationDuration)-80)+'ms');});
- note.classList.add('writing');requestAnimationFrame(()=>requestAnimationFrame(()=>note.classList.add('lit')));setTimeout(()=>{note.classList.remove('writing','lit');ws.forEach(w=>{w.style.animationDelay=w.style.animationDuration='';});},300+lines.length*per+400);
+ /* the screenshots are stuck on, one after another, once the pen has reached them */
+ $$('.thumbs button',note).forEach((t,n)=>{const at=end+80+n*130;t.style.setProperty('--sd',at+'ms');tm.push(setTimeout(()=>paper('stick'),at+170));});
+ note.classList.add('writing');requestAnimationFrame(()=>requestAnimationFrame(()=>{if(note._tm)note.classList.add('lit');}));
+ tm.push(setTimeout(()=>settle(i),end+80+$$('.thumbs button',note).length*130+700));
 }
+/* whatever is still being written is simply finished when the card is turned back or left */
+function settle(i){
+ const note=els[i]&&$('.face.back .note',els[i]);if(!note||!note._tm)return;
+ note._tm.forEach(clearTimeout);note._tm=null;note.classList.remove('writing','lit');
+ $$('.w',note).forEach(w=>{w.style.animationDelay=w.style.animationDuration='';});
+}
+/* ---------- the sticker can be peeled off and stuck somewhere else on its card; the place is remembered ---------- */
+function stuckAt(){const v=(store.get('rt-stk')||'').split(',').map(Number);return v.length===2&&v.every(isFinite)?` style="--px:${v[0]}cqw;--py:${v[1]}cqh"`:'';}
+let peel=null;
+deck.addEventListener('pointerdown',e=>{
+ const st=e.target.closest&&e.target.closest('.sticker');if(!st||innerWidth<=720||!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0))return;
+ const f=st.closest('.face').getBoundingClientRect(),r=st.getBoundingClientRect(),cs=getComputedStyle(st),v=cs.translate==='none'?[0,0]:cs.translate.split(' ').map(parseFloat);
+ peel={st,id:e.pointerId,x0:e.clientX,y0:e.clientY,bx:v[0]||0,by:v[1]||0,fw:f.width,fh:f.height,lo:[f.left+10-r.left,f.top+10-r.top],hi:[f.right-14-r.right,f.bottom-14-r.bottom],on:false};
+});
+addEventListener('pointermove',e=>{
+ const g=peel;if(!g||e.pointerId!==g.id)return;
+ let dx=e.clientX-g.x0,dy=e.clientY-g.y0;
+ if(!g.on){if(Math.hypot(dx,dy)<5)return;g.on=true;g.st.classList.remove('stuck');g.st.classList.add('up');document.body.classList.add('grabbing');paper('pen',.09);}
+ dx=Math.max(g.lo[0],Math.min(g.hi[0],dx));dy=Math.max(g.lo[1],Math.min(g.hi[1],dy));
+ g.px=(g.bx+dx)/g.fw*100;g.py=(g.by+dy)/g.fh*100;g.st.style.setProperty('--px',g.px.toFixed(2)+'cqw');g.st.style.setProperty('--py',g.py.toFixed(2)+'cqh');
+});
+function unpeel(e){
+ const g=peel;if(!g||e.pointerId!==g.id)return;peel=null;if(!g.on)return;
+ document.body.classList.remove('grabbing');g.st.classList.remove('up');void g.st.offsetWidth;g.st.classList.add('stuck');paper('stick');
+ if(g.px!=null)store.set('rt-stk',g.px.toFixed(2)+','+g.py.toFixed(2));
+}
+addEventListener('pointerup',unpeel);addEventListener('pointercancel',unpeel);
 /* ---------- events ---------- */
 deck.addEventListener('click',e=>{
  const g=e.target.closest('[data-go]');if(g){go(+g.dataset.go);return;}
@@ -488,6 +519,8 @@ function paper(kind,force){
   if(kind==='slide'){crackle(a,t,.12*r,650,1500*f,.5*f);if(!PHYS)thud(a,t+.105*r,.38*f,700);}
   else if(kind==='land1'){thud(a,t,Math.min(.6,.38*f),700);}
   else if(kind==='land2'){thud(a,t,.6,560);}
+  else if(kind==='pen'){crackle(a,t,(force||.08)*.75,1500,2400,.1);}
+  else if(kind==='stick'){thud(a,t,.22,1100);}
   else if(kind==='drop'){thud(a,t+.1,.3,620);}
   else if(kind==='flip'){crackle(a,t,.2*r,220,1500,.55);if(!PHYS)thud(a,t+.19*r,.6,560);}
   else if(kind==='lang'){touch(a,t,.6,820);touch(a,t+.125*r,.42,930);}
