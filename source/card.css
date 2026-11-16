@@ -507,3 +507,4 @@ body.phys .card[style*="--dim"] .face::after{transition:none;}
 .side{transition:background .15s,color .15s,box-shadow .15s,opacity .2s;}
 body.grabbing .side{opacity:0;}
 body.phys #deck *{touch-action:pan-y;}
+.sw{display:grid;text-align:left;} .sw>*{grid-area:1/1;} .sw>.off{visibility:hidden;}
