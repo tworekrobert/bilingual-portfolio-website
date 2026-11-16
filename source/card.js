@@ -205,7 +205,7 @@ const deckEl=$('#cards'),deck=$('#deck'),rail=$('#rail');
 let els=[];
 function render(){
  CARDS=defs();
- deckEl.innerHTML=CARDS.map((c,i)=>`<section class="card" data-id="${c.id}" aria-label="${pad(i+1)} ${esc(c.title)}"><i class="shd"></i><div class="inner">${face(c,i,'front',c.front(i))}${c.back?face(c,i,'back',c.back(i)):''}</div></section>`).join('');
+ deckEl.innerHTML=CARDS.map((c,i)=>`<section class="card${PHYS&&!inked.has(c.id)?' fresh':''}" data-id="${c.id}" aria-label="${pad(i+1)} ${esc(c.title)}"><i class="shd"></i><div class="inner">${face(c,i,'front',c.front(i))}${c.back?face(c,i,'back',c.back(i)):''}</div></section>`).join('');
  els=$$('.card',deckEl);B=[];hand(deckEl);
  rail.innerHTML=CARDS.map((c,i)=>`<button class="tab" data-go="${i}" aria-label="${pad(i+1)} ${esc(c.title)}" title="${esc(c.title)}"><span>${pad(i+1)}</span><em></em></button>`).join('');
  layout();
@@ -226,11 +226,11 @@ function layout(){
  });
  $$('.tab',rail).forEach((t,i)=>{const e=$('em',t);if(i===cur){t.setAttribute('aria-current','true');e.textContent=CARDS[i].title;}else{t.removeAttribute('aria-current');e.textContent='';}});
  const at=$('.tab[aria-current]',rail);if(at&&at.scrollIntoView)at.scrollIntoView({inline:'center',block:'nearest'});
- if(PHYS)wake();
+ if(PHYS){wake();if(!intro)ink(cur);}
 }
 function setHash(){const c=CARDS[cur];try{history.replaceState(null,'',c.id==='cover'?location.pathname+location.search:'#'+(c.hash||'card/'+c.id));}catch(_){}}
 function go(i,noHash,force){i=Math.max(0,Math.min(CARDS.length-1,i));if(i===cur)return;stopBeat();const mv=i>cur?cur:i;cur=i;landR=(Math.random()-.5)*.3;layout();if(B[mv])B[mv].land=force||1;paper('slide',force);if(!noHash)setHash();}
-function toggleFlip(){const id=CARDS[cur].id;if(!CARDS[cur].back)return;stopBeat();flip.has(id)?flip.delete(id):flip.add(id);layout();if(B[cur])B[cur].turn=1;paper('flip');}
+function toggleFlip(){const id=CARDS[cur].id;if(!CARDS[cur].back)return;stopBeat();flip.has(id)?flip.delete(id):flip.add(id);if(PHYS&&flip.has(id))write(cur);layout();if(B[cur])B[cur].turn=1;paper('flip');}
 function applyHash(){
  const m=location.hash.match(/^#(project|notes|card)\/([\w-]+)/);if(!m)return false;
  let id=m[2],f=false;if(m[1]==='project'&&['portfolio','tsp','vocab','restaurant','vaccination'].includes(id))id='more';
@@ -349,6 +349,27 @@ if(PHYS){
  addEventListener('pointercancel',e=>{if(grab&&e.pointerId===grab.id){grab.v=0;grab.p=0;grab.dx=0;letGo();}});
  deck.addEventListener('click',e=>{if(dragged){e.stopPropagation();e.preventDefault();}},true);
  deck.addEventListener('dragstart',e=>e.preventDefault());
+}
+/* ---------- ink ----------
+   The pen lines of a card are drawn the first time the card is on top, and the note on its back is
+   written, line after line, the first time it is turned over. After that the ink is simply there. */
+const inked=new Set(),written=new Set();
+const PENNED='.hd .sp,.toc button,.links a,.does li,.chips .chip,.ent,.sk,.pb h5,.lnk';
+function ink(i){
+ const el=els[i],id=CARDS[i].id;if(!el||!el.classList.contains('fresh'))return;
+ inked.add(id);$$(PENNED,el).forEach((e,n)=>e.style.setProperty('--n',Math.min(n,14)));
+ el.classList.remove('fresh');el.classList.add('draw');setTimeout(()=>el.classList.remove('draw'),2600);
+}
+function write(i){
+ const el=els[i],key=CARDS[i].id+LANG,note=el&&$('.face.back .note',el);if(!note||written.has(key))return;written.add(key);
+ const tw=document.createTreeWalker(note,NodeFilter.SHOW_TEXT),texts=[];while(tw.nextNode())if(tw.currentNode.parentNode.closest('p'))texts.push(tw.currentNode);
+ texts.forEach(t=>{const f=document.createDocumentFragment();t.nodeValue.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w)){f.appendChild(document.createTextNode(w));return;}const sp=document.createElement('span');sp.className='w';sp.textContent=w;f.appendChild(sp);});t.parentNode.replaceChild(f,t);});
+ const ws=$$('.w',note),lines=[];let ln=null,pt=-1e9,pl=1e9;
+ ws.forEach(w=>{const t=w.offsetTop,l=w.offsetLeft;if(Math.abs(t-pt)>w.offsetHeight*.5||l<pl-40){ln={x0:l,x1:l+w.offsetWidth,ws:[]};lines.push(ln);}ln.ws.push(w);ln.x1=Math.max(ln.x1,l+w.offsetWidth);pt=t;pl=l;});
+ const per=Math.max(55,Math.min(130,1700/lines.length));
+ lines.forEach((L,k)=>{const span=Math.max(1,L.x1-L.x0);L.ws.forEach(w=>{w.style.animationDelay=Math.round(300+k*per+(w.offsetLeft-L.x0)/span*per)+'ms';w.style.animationDuration=Math.round(Math.max(70,w.offsetWidth/span*per*1.3))+'ms';});});
+ $$('b',note).forEach(b=>{const l=$$('.w',b).pop();if(l)b.style.setProperty('--hd',(parseFloat(l.style.animationDelay)+parseFloat(l.style.animationDuration)-80)+'ms');});
+ note.classList.add('writing');requestAnimationFrame(()=>requestAnimationFrame(()=>note.classList.add('lit')));setTimeout(()=>{note.classList.remove('writing','lit');ws.forEach(w=>{w.style.animationDelay=w.style.animationDuration='';});},300+lines.length*per+400);
 }
 /* ---------- events ---------- */
 deck.addEventListener('click',e=>{
