@@ -49,7 +49,7 @@ This is the portfolio of Robert Tworek, a Technical Computer Science student at 
 - **Light switch.** Flips between light and dark. Each flip moves to the next variant: orange and beige, pink and beige, yellow and brown for light; espresso, wine and umber for dark. The choice is remembered.
 - **Live GitHub list.** On load, every five minutes and when the tab regains focus, the page reads public repositories of `tworekrobert` from the GitHub API and adds new non-fork repositories to the "Other projects" card. The last result is cached in `localStorage`, so the card still works when the API limit is reached.
 - **Sequencer.** Scheduled on the Web Audio clock, so the beat stays steady. The playhead follows what you hear, clicking a square plays that drum, and the beat stops when you flip or leave the card.
-- **Paper sounds.** Card slides, flips and the light switch click are synthesised in the browser, with a toggle in the top bar. Nothing is downloaded.
+- **Sounds.** Everything is synthesised in the browser from three materials: card stock sliding, a card touching the table, and the bead chain of a lamp for the light switch. A card is heard landing when it lands. There is a toggle in the top bar and nothing is downloaded.
 - **No nonsense switch.** A plain-text version of the whole site, built from the same data as the cards, in the current language.
 - **Screenshots** are shown in the colours of the current theme and in true colour on hover.
 - **Accessibility.** Keyboard navigation (arrow keys, `F` to flip), visible focus, reduced-motion support, and the plain-text view.
