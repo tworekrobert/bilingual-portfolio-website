@@ -489,3 +489,21 @@ body.dealing{cursor:pointer;}
 body.painting,body.painting *{cursor:cell !important;-webkit-user-select:none;user-select:none;}
 .seqrow button:active{transform:scale(.92);}
 .pt{display:none;} @media (hover:none){.ph{display:none;} .pt{display:inline;}}
+
+/* ---------- weight: springs move the cards, the shadow is its own layer so it can stay on the table ---------- */
+.shd{display:none;}
+.card img{-webkit-user-drag:none;}
+body.phys .card,body.phys .card.next{transition:opacity .5s;}
+body.phys .card.next{transition:none;}
+body.phys .inner,body.phys .face{transition:none;}
+body.phys .inner{will-change:transform;}
+body.phys .face{box-shadow:1px 1px 0 var(--edge),2px 2px 0 var(--edge),3px 3px 0 var(--edge),4px 4px 0 var(--edge);}
+body.phys .shd{display:block;position:absolute;inset:0;border-radius:18px;background:var(--shadow);transform:translate(7px,8px);pointer-events:none;will-change:transform;}
+body.phys .card:not(.bk) .face.front,body.phys .card.bk .face.back{visibility:visible;}
+body.phys .card:not(.bk) .face.back,body.phys .card.bk .face.front{visibility:hidden;}
+body.grabbing,body.grabbing *{cursor:grabbing !important;-webkit-user-select:none;user-select:none;}
+body.phys .card.past .face::after{opacity:calc(.3*var(--dim,1));}
+body.phys .card[style*="--dim"] .face::after{transition:none;}
+.side{transition:background .15s,color .15s,box-shadow .15s,opacity .2s;}
+body.grabbing .side{opacity:0;}
+body.phys #deck *{touch-action:pan-y;}
