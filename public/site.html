@@ -968,6 +968,9 @@ const MORE=[
  {id:'vaccination',name:{en:'Vaccination Programme Planner',pl:'Planer programu szczepień'},kind:'k_academic',stack:'C#, ASP.NET Core 10, PostgreSQL, Angular 20, HL7 FHIR, Docker',
   link:'https://github.com/tworekrobert/vaccination-programme-planner',lk:'repo',
   d:{en:"A vaccination planner for a primary care clinic: schedules, reminders, coverage reports and HL7 FHIR export. My solo semester project, 37 xUnit tests, runs with one docker compose up.",pl:"Planer szczepień dla przychodni POZ: kalendarze, przypomnienia, raporty wyszczepialności i eksport do HL7 FHIR. Mój samodzielny projekt semestralny, 37 testów xUnit, uruchamiany jednym docker compose up."}},
+ {id:'botanalyzer',name:{en:'Bot Message Analyzer',pl:'Analizator wiadomości bota'},kind:'k_personal',stack:'C#, .NET 8, Gemini API, GitHub Actions',
+  link:'https://github.com/tworekrobert/bot-message-analyzer',lk:'repo',
+  d:{en:"A console tool that finds the questions a chatbot or voicebot cannot answer. It judges each customer turn in a log, groups the failures by topic and ranks them, with phrases to retrain the bot on.",pl:"Konsolowe narzędzie, które znajduje pytania, na które chatbot lub voicebot nie umie odpowiedzieć. Ocenia każdą wypowiedź klienta w logu, grupuje porażki według tematów i układa je w ranking, razem z frazami do douczenia bota."}},
  {id:'portfolio',name:{en:'Bilingual Portfolio Website',pl:'Dwujęzyczna strona portfolio'},kind:'k_personal',stack:'Next.js, React, TypeScript, Tailwind CSS, Vercel',
   link:'https://portfoliotworekrobert.vercel.app',lk:'live',
   d:{en:"The site you may have seen before this one. Next.js, with Polish and English versions, a live list of my GitHub repos and downloadable CVs.",pl:"Strona, którą mogłeś widzieć przed tą. Next.js, wersje po polsku i angielsku, lista moich repozytoriów z GitHuba na żywo i CV do pobrania."}},
@@ -1069,7 +1072,7 @@ function projBack(w){
  return `<div class="bd pb scroll note"><div class="col"><p><b>${K.why}</b> ${w.whyT[LANG]}</p><p><b>${K.inside}</b> ${w.pts[LANG].slice(0,3).join(' ')}</p><p>${w.pts[LANG].slice(3).join(' ')}</p></div><div class="col">${w.hard?`<p><b>${K.hard}</b> ${w.hard[LANG]}</p>`:''}${gal}</div></div>`;
 }
 let GH=[];try{GH=JSON.parse(store.get('rt-gh')||'[]')||[];}catch(_){GH=[];}
-const KNOWNRE=/order.?flow|helpdesk|pharmac|tsp|vocab|restaurant|portfolio|vaccin/i;const KNOWN=['order-flow-management-system','helpdesk-management-system','pharmacy-management-system','tsp-algorithms-benchmark','vocabulary-learning-app','restaurant-process-simulation','vaccination-programme-planner','tworekrobert'];
+const KNOWNRE=/order.?flow|helpdesk|pharmac|tsp|vocab|restaurant|portfolio|vaccin|bot.?message/i;const KNOWN=['order-flow-management-system','helpdesk-management-system','pharmacy-management-system','tsp-algorithms-benchmark','vocabulary-learning-app','restaurant-process-simulation','vaccination-programme-planner','bot-message-analyzer','tworekrobert'];
 function ghEntries(){return GH.filter(r=>!KNOWN.includes(r.name)&&!KNOWNRE.test(r.name)).map(r=>({id:'gh-'+r.name,name:{en:r.name.replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),pl:r.name.replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase())},kind:'gh_repo',stack:[r.lang].concat(r.topics||[]).filter(Boolean).join(', '),link:r.url,lk:'repo',d:{en:r.desc||T('no_desc'),pl:r.desc||T('no_desc')}}));}
 function moreFront(){
  const L=I18N[LANG];
