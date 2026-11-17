@@ -46,11 +46,13 @@ This is the portfolio of Robert Tworek, a Technical Computer Science student at 
 
 - **Flip cards.** Every card with more to say has a back, written as a short note.
 - **Cards with weight.** Grab the top card and throw it on the pile, or pull the last one back out. Movement is driven by springs stepped at a fixed rate, so it behaves the same on any display; with reduced motion switched on the cards use plain transitions instead.
-- **Ink.** The pen lines of a card are drawn the first time the card is on top, and the note on its back is written line by line the first time it is turned over, with the highlighter following the pen. Screenshots are stuck on with tape after the text, and the "Open to work" sticker can be peeled off and moved; its place is remembered.
+- **A beat you can feel.** While the sequencer plays, each kick lifts the card off its shadow and jolts the stack, the snare flicks the pile and the hat ticks the tab. The tempo can be changed.
+- **Education on a line.** The two schools sit on one pen line from 2018 to 2027; pointing at a school marks its stretch of the line, and the other way round.
+- **Ink.** The pen lines of a card are drawn the first time the card is on top, and the note on its back is written line by line the first time it is turned over, with the highlighter following the pen. Screenshots are stuck on with tape after the text, and the "Open to work" sticker can be peeled off and moved; its place is remembered. Sending from the contact card stamps the date on the note.
 - **Light switch.** Flips between light and dark. Each flip moves to the next variant: orange and beige, pink and beige, yellow and brown for light; espresso, wine and umber for dark. The choice is remembered.
 - **Live GitHub list.** On load, every five minutes and when the tab regains focus, the page reads public repositories of `tworekrobert` from the GitHub API and adds new non-fork repositories to the "Other projects" card. The last result is cached in `localStorage`, so the card still works when the API limit is reached.
 - **Sequencer.** Scheduled on the Web Audio clock, so the beat stays steady. The playhead follows what you hear, clicking a square plays that drum, and the beat stops when you flip or leave the card.
-- **Sounds.** Card slides and flips, the pen, the tape and a wall light switch are synthesised in the browser, and a card is heard landing when it lands. There is a toggle in the top bar and nothing is downloaded.
+- **Paper sounds.** Card slides, flips and the light switch click are synthesised in the browser, with a toggle in the top bar. Nothing is downloaded.
 - **No nonsense switch.** A plain-text version of the whole site, built from the same data as the cards, in the current language.
 - **Screenshots** are shown in the colours of the current theme and in true colour on hover.
 - **Accessibility.** Keyboard navigation (arrow keys, `F` to flip), visible focus, reduced-motion support, and the plain-text view.
