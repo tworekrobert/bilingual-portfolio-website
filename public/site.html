@@ -635,6 +635,29 @@ body.phys #deck *{touch-action:pan-y;}
 [data-bpm]{font-variant-numeric:tabular-nums;white-space:nowrap;}
 .tl .seg{isolation:isolate;}
 .seqbar{flex-wrap:wrap;row-gap:8px;} .seqbar .lab{flex:1 1 100%;order:3;}
+/* ---------- the CV page on the table ---------- */
+#cvs{position:fixed;inset:0;z-index:450;display:none;align-items:center;justify-content:center;padding:3vh 3vw;background:color-mix(in srgb,var(--table) 84%,transparent);perspective:1400px;}
+#cvs.show{display:flex;}
+.cvwrap{display:flex;align-items:flex-end;gap:30px;max-height:100%;}
+.cvpage{height:min(92vh,1120px);aspect-ratio:1240/1754;background:#fff;border-radius:3px;box-shadow:8px 9px 0 var(--shadow);cursor:zoom-in;flex:none;}
+.cvpage img{display:block;width:100%;height:100%;border-radius:3px;}
+.cvnote{width:232px;flex:none;margin-bottom:6%;background:var(--stock);color:var(--ink);border-radius:16px;padding:20px 20px 18px;display:flex;flex-direction:column;gap:10px;box-shadow:1px 1px 0 var(--edge),2px 2px 0 var(--edge),3px 3px 0 var(--edge),7px 8px 0 var(--shadow);rotate:2.2deg;}
+.cvnote h3{font:400 34px/1 "Biro","Hand",cursive;margin:0;}
+.cvnote .when{font:400 15px/1.2 var(--sans);color:var(--soft);margin:-4px 0 6px;}
+.cvnote .btn{width:100%;justify-content:flex-start;}
+.sticker:focus-visible{outline:2.5px solid var(--ink);outline-offset:5px;}
+@media (max-width:720px){
+ #cvs{display:none;align-items:flex-start;overflow-y:auto;padding:14px 12px 0;}
+ #cvs.show{display:block;}
+ .cvwrap{flex-direction:column;align-items:stretch;gap:14px;}
+ .cvpage{height:auto;width:100%;}
+ .cvnote{position:sticky;bottom:10px;width:auto;margin:0 0 10px;rotate:0deg;display:grid;grid-template-columns:1fr 1fr;padding:14px;}
+ .cvnote h3,.cvnote .when{display:none;} .cvnote .btn[data-cvd]{grid-column:1/-1;}
+}
+@media (max-height:520px) and (min-width:721px){.cvpage{height:94vh;} .cvnote{margin-bottom:0;}}
+.cvnote{width:252px;} .cvnote .btn{white-space:nowrap;padding:0 16px;}
+.sticker{cursor:pointer;} .sticker.up{cursor:grabbing;}
+@media (max-width:720px){.cvnote{width:auto;} .cvnote .btn{padding:0 10px;font-size:15px;gap:7px;}}
 
 </style>
 </head>
@@ -994,10 +1017,12 @@ WORK.forEach(w=>{w.shots=SHOTS[w.id]||null;w.hard=HARD[w.id]||null;w.live=LIVE[w
 const UI={
  en:{nav_cover:'Hi!',nav_music:'Backstory',nav_exp:'Experience',nav_skills:'Skills',nav_contact:'Contact',turn:'Turn over',turnback:'Turn back',prev:'Previous card',next:'Next card',toc:'Contents',
   beat_play:'Play beat',beat_stop:'Stop',kick:'Kick',snare:'Snare',hat:'Hat',beat_p:'<span class="ph">Click or drag to add steps. Right-click or drag with the right button to erase.</span><span class="pt">Drag to add steps. Start on a filled square to erase.</span> It is a step sequencer, the same idea as in FL Studio where all of this started.',
+  cv_open:'Open my CV',cv_title:'My CV',cv_date:'Updated November 2026',cv_dl:'Download PDF',cv_pl:'Polish version',cv_en:'English version',cv_back:'Put it back',
   stamp:'Open to work',deal_hint:'Click or tap to deal',stamp_sub:'AI, automation and junior .NET roles',hi1:'Hi! :)',hi2:"I'm Robert.",intro:"I'm an AI and .NET developer from Wrocław, Poland.",say_hi:'Say hi',copied:'Email copied',sent:'Opening your mail app',no_music:'Music files not found',exp_h:'Experience and education',now_h:'Right now',cv_l:'Resume',cv_s:'PDF',
   text_view:'No nonsense switch',lang_btn:'Language switch',lights_off:'Light switch',lights_on:'Light switch',day:'Day',night:'Night',facts_back:'Back to the deck',music_play:'Play music',music_pause:'Pause music',role_k:'AI + .NET Developer',how_h:'How I work',story:'The story',stack:'Stack',hi_p:'Open to work now, full-time.',lang_to:'Switch to Polish',theme_to:'Switch day / night'},
  pl:{nav_cover:'Cześć!',nav_music:'Historia',nav_exp:'Doświadczenie',nav_skills:'Umiejętności',nav_contact:'Kontakt',turn:'Odwróć',turnback:'Odwróć z powrotem',prev:'Poprzednia karta',next:'Następna karta',toc:'Spis',
   beat_play:'Odtwórz bit',beat_stop:'Stop',kick:'Stopa',snare:'Werbel',hat:'Hi-hat',beat_p:'<span class="ph">Kliknij lub przeciągnij, aby dodać kroki. Prawy przycisk (też z przeciąganiem) usuwa.</span><span class="pt">Przeciągaj, aby dodać kroki. Zacznij od zapełnionego kwadratu, aby usuwać.</span> To sekwencer krokowy, ten sam pomysł co w FL Studio, od którego wszystko się zaczęło.',
+  cv_open:'Otwórz moje CV',cv_title:'Moje CV',cv_date:'Aktualizacja: listopad 2026',cv_dl:'Pobierz PDF',cv_pl:'Wersja polska',cv_en:'Wersja angielska',cv_back:'Odłóż',
   stamp:'Szukam pracy',deal_hint:'Kliknij, aby rozdać',stamp_sub:'AI, automatyzacja i junior .NET',hi1:'Cześć! :)',hi2:'Jestem Robert.',intro:'Jestem developerem AI i .NET z Wrocławia.',say_hi:'Napisz do mnie',copied:'Skopiowano adres',sent:'Otwieram program pocztowy',no_music:'Nie znaleziono plików z muzyką',exp_h:'Doświadczenie i edukacja',now_h:'Teraz',cv_l:'CV',cv_s:'PDF',
   text_view:'Przełącznik bez ściemy',lang_btn:'Zmiana języka',lights_off:'Włącznik światła',lights_on:'Włącznik światła',day:'Dzień',night:'Noc',facts_back:'Wróć do kart',music_play:'Włącz muzykę',music_pause:'Zatrzymaj muzykę',role_k:'AI + .NET Developer',how_h:'Jak pracuję',story:'Historia',stack:'Stack',hi_p:'Dostępny od zaraz, pełny etat.',lang_to:'Przełącz na angielski',theme_to:'Przełącz dzień / noc'}};
 ['en','pl'].forEach(l=>Object.assign(I18N[l],UI[l]));
@@ -1138,7 +1163,7 @@ function coverFront(){
  const chips=[L.w_c1,L.w_c4].map(c=>`<span class="chip">${c}</span>`).join('');
  const grp={};const fp=CARDS.findIndex(c=>c.hash&&c.hash.startsWith('project/'));grp[fp]=T('g_main');grp[CARDS.findIndex(c=>c.id==='music')]=T('g_me');
  const toc=CARDS.map((c,i)=>i?(grp[i]?`<div class="grp">${grp[i]}</div>`:'')+`<button data-go="${i}"><span class="t">${esc(c.title)}</span></button>`:'').join('');
- return `<div class="bd cover"><div class="left"><div><h1 class="name"><span>${T('hi1')}</span><span>${T('hi2')}</span></h1><p class="role">${T('intro')}</p></div><div class="sticker"${stuckAt()}><span>${T('stamp')}<small>${T('stamp_sub')}</small></span></div></div><nav class="toc" aria-label="${T('toc')}">${toc}</nav></div>`;
+ return `<div class="bd cover"><div class="left"><div><h1 class="name"><span>${T('hi1')}</span><span>${T('hi2')}</span></h1><p class="role">${T('intro')}</p></div><div class="sticker" role="button" tabindex="0" aria-haspopup="dialog" aria-label="${T('cv_open')}: ${T('stamp')}"${stuckAt()}><span>${T('stamp')}<small>${T('stamp_sub')}</small></span></div></div><nav class="toc" aria-label="${T('toc')}">${toc}</nav></div>`;
 }
 function coverBack(){return noteBack('cover');}
 const pat={kick:[0,3,8,10,14],snare:[4,12],hat:[0,2,4,6,8,10,12,14]};
@@ -1380,7 +1405,7 @@ function settle(i){
 }
 /* ---------- the sticker can be peeled off and stuck somewhere else on its card; the place is remembered ---------- */
 function stuckAt(){const v=(store.get('rt-stk')||'').split(',').map(Number);return v.length===2&&v.every(isFinite)?` style="--px:${v[0]}cqw;--py:${v[1]}cqh"`:'';}
-let peel=null;
+let peel=null,stkMoved=false;
 deck.addEventListener('pointerdown',e=>{
  const st=e.target.closest&&e.target.closest('.sticker');if(!st||innerWidth<=720||!e.isPrimary||(e.pointerType==='mouse'&&e.button!==0))return;
  const f=st.closest('.face').getBoundingClientRect(),r=st.getBoundingClientRect(),cs=getComputedStyle(st),v=cs.translate==='none'?[0,0]:cs.translate.split(' ').map(parseFloat);
@@ -1395,7 +1420,7 @@ addEventListener('pointermove',e=>{
 });
 function unpeel(e){
  const g=peel;if(!g||e.pointerId!==g.id)return;peel=null;if(!g.on)return;
- document.body.classList.remove('grabbing');g.st.classList.remove('up');void g.st.offsetWidth;g.st.classList.add('stuck');
+ stkMoved=true;setTimeout(()=>{stkMoved=false;},80);document.body.classList.remove('grabbing');g.st.classList.remove('up');void g.st.offsetWidth;g.st.classList.add('stuck');
  if(g.px!=null)store.set('rt-stk',g.px.toFixed(2)+','+g.py.toFixed(2));
 }
 addEventListener('pointerup',unpeel);addEventListener('pointercancel',unpeel);
@@ -1405,8 +1430,64 @@ function stamp(){
  ta.parentNode.style.position='relative';ta.parentNode.appendChild(d);
  const b=B[cur];if(b)setTimeout(()=>{b.vy+=120;b.vr+=4;wake();},150);
 }
+/* ---------- the CV: the sticker sits on a folder, the folder holds the CV. Clicking it pulls the page out from under the first card ---------- */
+const cvs=document.createElement('div');cvs.id='cvs';cvs.setAttribute('role','dialog');cvs.setAttribute('aria-modal','true');
+cvs.innerHTML='<div class="cvwrap"><div class="cvpage"><img alt="" decoding="async"></div><div class="cvnote"><h3></h3><p class="when"></p><a class="btn" data-cvd target="_blank" rel="noopener"></a><button class="btn line" data-cvl></button><button class="btn line" data-cvx></button></div></div>';
+document.body.appendChild(cvs);
+let cvL=null,cvBusy=false;
+function cvFill(){
+ const f=cvL==='pl'?'PL':'EN',img=$('.cvpage img',cvs);
+ img.src='cv-'+f+'.webp';img.alt='CV, Robert Tworek ('+(cvL==='pl'?'PL':'EN')+')';
+ const d=$('[data-cvd]',cvs);d.href='Robert-Tworek-CV-'+f+'.pdf';d.setAttribute('download','Robert-Tworek-CV-'+f+'.pdf');d.innerHTML=IC('doc')+'<span>'+T('cv_dl')+'</span>';
+ $('[data-cvl]',cvs).innerHTML=IC('globe')+'<span>'+T(cvL==='pl'?'cv_en':'cv_pl')+'</span>';
+ $('h3',cvs).textContent=T('cv_title');$('.when',cvs).textContent=T('cv_date');$('[data-cvx]',cvs).innerHTML=IC('g-close')+'<span>'+T('cv_back')+'</span>';
+ cvs.setAttribute('aria-label',T('cv_title'));
+}
+function cvFrom(){const st=$('.card[aria-hidden=false] .sticker')||$('.sticker'),pg=$('.cvpage',cvs).getBoundingClientRect();if(!st)return{x:0,y:200};const r=st.getBoundingClientRect();return{x:r.left+r.width/2-(pg.left+pg.width/2),y:r.top+r.height/2-(pg.top+pg.height/2)};}
+async function openCV(){
+ if(cvBusy||cvs.classList.contains('show'))return;cvBusy=true;stopBeat();
+ cvL=LANG;cvFill();const img=$('.cvpage img',cvs);
+ try{await Promise.race([img.decode(),new Promise(r=>setTimeout(r,700))]);}catch(_){}
+ cvs.classList.add('show');paper('open');cvPre(cvL==='pl'?'en':'pl');
+ const pg=$('.cvpage',cvs),nt=$('.cvnote',cvs);
+ if(PHYS){
+  const o=cvFrom();
+  cvs.animate([{opacity:0},{opacity:1}],{duration:260,easing:'ease-out'});
+  pg.animate([{transform:`translate(${o.x}px,${o.y}px) rotate(-9deg) scale(.22)`,opacity:0},{opacity:1,offset:.14},{transform:'translate(0,-10px) rotate(1.4deg) scale(1.012)',offset:.68},{transform:'translate(0,2px) rotate(-.4deg) scale(.998)',offset:.86},{transform:'none'}],{duration:640,easing:'cubic-bezier(.3,.62,.3,1)'});
+  nt.animate([{transform:'translate(90px,30px) rotate(9deg)',opacity:0},{opacity:1,offset:.3},{transform:'translate(-4px,-3px) rotate(1.3deg)',offset:.75},{transform:'none'}],{duration:480,delay:300,easing:'cubic-bezier(.3,.62,.3,1)',fill:'backwards'});
+  const b=B[cur];if(b){b.vy+=160;b.vr-=6;wake();}
+ }
+ setTimeout(()=>{$('[data-cvd]',cvs).focus({preventScroll:true});cvBusy=false;},PHYS?320:0);
+}
+/* the page is turned over to the other language: it lifts, goes edge-on, and only then shows the other side */
+function cvPre(l){const im=new Image();im.src='cv-'+(l==='pl'?'PL':'EN')+'.webp';return Promise.race([im.decode().catch(()=>{}),new Promise(r=>setTimeout(r,800))]);}
+async function cvTurn(){
+ if(cvBusy)return;cvBusy=true;const nx=cvL==='pl'?'en':'pl',pg=$('.cvpage',cvs);
+ await cvPre(nx);paper('flip');
+ if(!PHYS){cvL=nx;cvFill();cvBusy=false;return;}
+ const a=pg.animate([{transform:'none'},{transform:'translateY(-16px) rotateY(90deg) scale(1.03)'}],{duration:230,easing:'cubic-bezier(.45,0,.8,.45)',fill:'forwards'});
+ await a.finished;cvL=nx;cvFill();
+ const b=pg.animate([{transform:'translateY(-16px) rotateY(-90deg) scale(1.03)'},{transform:'translateY(3px) rotateY(5deg) scale(.995)',offset:.72},{transform:'none'}],{duration:380,easing:'cubic-bezier(.2,.6,.3,1)'});
+ a.cancel();await b.finished.catch(()=>{});cvBusy=false;
+}
+function closeCV(){
+ if(cvBusy||!cvs.classList.contains('show'))return;cvBusy=true;paper('close');
+ const done=()=>{cvs.classList.remove('show');cvBusy=false;const st=$('.card[aria-hidden=false] .sticker');if(st)st.focus({preventScroll:true});};
+ if(!PHYS){done();return;}
+ const o=cvFrom(),pg=$('.cvpage',cvs);
+ $('.cvnote',cvs).animate([{transform:'none',opacity:1},{transform:'translate(70px,40px) rotate(8deg)',opacity:0}],{duration:220,easing:'ease-in',fill:'forwards'});
+ const a=pg.animate([{transform:'none'},{transform:'translate(0,-8px) rotate(.8deg)',offset:.22},{transform:`translate(${o.x}px,${o.y}px) rotate(-8deg) scale(.22)`,opacity:0}],{duration:430,easing:'cubic-bezier(.5,0,.75,.4)',fill:'forwards'});
+ cvs.animate([{opacity:1},{opacity:1,offset:.6},{opacity:0}],{duration:430,fill:'forwards'});
+ a.onfinish=()=>{done();cvs.getAnimations({subtree:true}).forEach(x=>x.cancel());const b=B[cur];if(b){b.vy-=110;wake();}};
+}
+cvs.addEventListener('click',e=>{
+ if(e.target.closest('[data-cvx]')||!e.target.closest('.cvpage,.cvnote')){closeCV();return;}
+ if(e.target.closest('[data-cvl]')){cvTurn();return;}
+ if(e.target.closest('.cvpage')){window.open($('[data-cvd]',cvs).href,'_blank','noopener');}
+});
 /* ---------- events ---------- */
 deck.addEventListener('click',e=>{
+ if(e.target.closest('.sticker')){if(!stkMoved)openCV();return;}
  const g=e.target.closest('[data-go]');if(g){go(+g.dataset.go);return;}
  if(e.target.closest('[data-flip]')){toggleFlip();return;}
  const z=e.target.closest('[data-zoom]');if(z){const [p,n]=z.dataset.zoom.split(':');zoomOpen(p,+n);return;}
@@ -1420,7 +1501,9 @@ deck.addEventListener('click',e=>{
 });
 rail.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(+g.dataset.go);});
 $('#prev').onclick=()=>go(cur-1);$('#next').onclick=()=>go(cur+1);
+deck.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('sticker')){e.preventDefault();e.stopPropagation();openCV();}});
 addEventListener('keydown',e=>{
+ if(cvs.classList.contains('show')){if(e.key==='Escape'){e.preventDefault();closeCV();}else if(e.key==='Tab'){const f=$$('a,button',cvs),i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus();}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();}}e.stopPropagation();return;}
  if(lb.classList.contains('show')){if(e.key==='Escape')zoomClose();else if(e.key==='ArrowRight')zoomStep(1);else if(e.key==='ArrowLeft')zoomStep(-1);return;}
  if(facts.classList.contains('show')){if(e.key==='Escape')closeFacts();return;}
  if(/^(INPUT|TEXTAREA)$/.test((e.target||{}).tagName))return;
@@ -1454,7 +1537,7 @@ function buildFacts(){
  wrap.insertAdjacentHTML('beforeend',`<h1>Robert Tworek</h1><p>${T('intro')}</p>
  <h2>${T('g_me')}</h2>${notes('cover').replace('<p><b>About me.</b> ','<p>').replace('<p><b>O mnie.</b> ','<p>')}<h3>${T('nav_music')}</h3>${notes('music')}<h3>${T('nav_exp')}</h3>${notes('exp')}<h3>${T('nav_edu')}</h3>${notes('edu')}<h3>${T('nav_skills')}</h3>${notes('skills')}
  <h2>${T('g_main')}</h2>${proj}<h2>${T('nav_more')}</h2>${more}
- <h2>${T('nav_contact')}</h2><p><a href="mailto:rtworek24@gmail.com">rtworek24@gmail.com</a> / <a href="https://github.com/tworekrobert" target="_blank" rel="noopener">github.com/tworekrobert</a> / <a href="https://linkedin.com/in/tworekrobert" target="_blank" rel="noopener">linkedin.com/in/tworekrobert</a></p>`);
+ <h2>${T('nav_contact')}</h2><p><a href="mailto:rtworek24@gmail.com">rtworek24@gmail.com</a> / <a href="https://github.com/tworekrobert" target="_blank" rel="noopener">github.com/tworekrobert</a> / <a href="https://linkedin.com/in/tworekrobert" target="_blank" rel="noopener">linkedin.com/in/tworekrobert</a> / <a href="Robert-Tworek-CV-${LANG==='pl'?'PL':'EN'}.pdf" target="_blank" rel="noopener">CV (PDF)</a></p>`);
 }
 function openFacts(){buildFacts();paper('open');facts.classList.add('show');facts.scrollTop=0;$('.back',facts).focus();}
 function closeFacts(){paper('close');facts.classList.remove('show');}
