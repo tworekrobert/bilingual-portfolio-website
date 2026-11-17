@@ -1448,7 +1448,7 @@ async function openCV(){
  if(cvBusy||cvs.classList.contains('show'))return;cvBusy=true;stopBeat();
  cvL=LANG;cvFill();const img=$('.cvpage img',cvs);
  try{await Promise.race([img.decode(),new Promise(r=>setTimeout(r,700))]);}catch(_){}
- cvs.classList.add('show');paper('open');
+ cvs.classList.add('show');paper('open');cvPre(cvL==='pl'?'en':'pl');
  const pg=$('.cvpage',cvs),nt=$('.cvnote',cvs);
  if(PHYS){
   const o=cvFrom();
@@ -1458,6 +1458,17 @@ async function openCV(){
   const b=B[cur];if(b){b.vy+=160;b.vr-=6;wake();}
  }
  setTimeout(()=>{$('[data-cvd]',cvs).focus({preventScroll:true});cvBusy=false;},PHYS?320:0);
+}
+/* the page is turned over to the other language: it lifts, goes edge-on, and only then shows the other side */
+function cvPre(l){const im=new Image();im.src='cv-'+(l==='pl'?'PL':'EN')+'.webp';return Promise.race([im.decode().catch(()=>{}),new Promise(r=>setTimeout(r,800))]);}
+async function cvTurn(){
+ if(cvBusy)return;cvBusy=true;const nx=cvL==='pl'?'en':'pl',pg=$('.cvpage',cvs);
+ await cvPre(nx);paper('flip');
+ if(!PHYS){cvL=nx;cvFill();cvBusy=false;return;}
+ const a=pg.animate([{transform:'none'},{transform:'translateY(-16px) rotateY(90deg) scale(1.03)'}],{duration:230,easing:'cubic-bezier(.45,0,.8,.45)',fill:'forwards'});
+ await a.finished;cvL=nx;cvFill();
+ const b=pg.animate([{transform:'translateY(-16px) rotateY(-90deg) scale(1.03)'},{transform:'translateY(3px) rotateY(5deg) scale(.995)',offset:.72},{transform:'none'}],{duration:380,easing:'cubic-bezier(.2,.6,.3,1)'});
+ a.cancel();await b.finished.catch(()=>{});cvBusy=false;
 }
 function closeCV(){
  if(cvBusy||!cvs.classList.contains('show'))return;cvBusy=true;paper('close');
@@ -1471,7 +1482,7 @@ function closeCV(){
 }
 cvs.addEventListener('click',e=>{
  if(e.target.closest('[data-cvx]')||!e.target.closest('.cvpage,.cvnote')){closeCV();return;}
- if(e.target.closest('[data-cvl]')){cvL=cvL==='pl'?'en':'pl';const pg=$('.cvpage',cvs);cvFill();paper('flip');if(PHYS)pg.animate([{transform:'rotateY(0)'},{transform:'rotateY(90deg)',offset:.5},{transform:'rotateY(0)'}],{duration:420,easing:'ease-in-out'});return;}
+ if(e.target.closest('[data-cvl]')){cvTurn();return;}
  if(e.target.closest('.cvpage')){window.open($('[data-cvd]',cvs).href,'_blank','noopener');}
 });
 /* ---------- events ---------- */
