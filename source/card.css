@@ -557,3 +557,25 @@ body.phys #deck *{touch-action:pan-y;}
 /* sending stamps the date on the note */
 @keyframes stamped{0%{opacity:0;scale:1.9;rotate:6deg;}55%{opacity:1;scale:.94;rotate:-9deg;}75%{scale:1.03;}100%{opacity:1;scale:1;rotate:-8deg;}}
 .stamped{position:absolute;right:8%;top:38%;padding:5px 14px 3px;font:400 30px/1 "Hand",var(--sans);-webkit-text-stroke:.6px currentColor;letter-spacing:.04em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 78%,var(--stock));box-shadow:inset 0 0 0 2.5px currentColor,0 0 0 2px var(--stock),0 0 0 3.5px currentColor;border-radius:4px 7px 5px 8px/7px 4px 8px 5px;rotate:-8deg;pointer-events:none;animation:stamped .3s cubic-bezier(.3,.7,.3,1) .1s backwards;}
+/* ---------- education: one pen line from 2018 to 2027 ---------- */
+.tl{position:relative;flex:none;height:64px;margin:0 34px 4px 8px;}
+.tl .seg{position:absolute;top:0;height:26px;cursor:default;}
+.tl .seg::before{content:"";position:absolute;left:0;right:0;top:10px;height:6px;background:var(--ink);-webkit-mask:var(--p1) center/100% 100% no-repeat;mask:var(--p1) center/100% 100% no-repeat;}
+.tl .seg::after{content:"";position:absolute;left:-2px;right:-2px;top:5px;height:16px;background:var(--spot);opacity:0;z-index:-1;border-radius:3px 6px 4px 7px/6px 3px 7px 4px;transition:opacity .15s;}
+.tl .s1::before{-webkit-mask-image:var(--p2);mask-image:var(--p2);} .tl .s0::before{background:var(--rule);-webkit-mask-image:var(--p3);mask-image:var(--p3);}
+.tl b{position:absolute;top:26px;translate:-50% 0;font:400 25px/1 "Biro","Hand",cursive;color:var(--ink);white-space:nowrap;padding-top:8px;}
+.tl b::before{content:"";position:absolute;left:50%;top:-22px;width:2.5px;height:22px;margin-left:-1px;background:var(--ink);border-radius:2px;rotate:4deg;}
+.tl b:first-of-type{translate:0 0;} .tl b:first-of-type::before{left:1px;} .tl b.e{translate:-100% 0;} .tl b.e::before{left:auto;right:0;}
+.tl b.now{top:-22px;padding:0 0 0;color:var(--soft);font-size:22px;} .tl b.now::before{top:24px;height:14px;background:var(--soft);rotate:-5deg;}
+.edu .grid4{flex:0 1 auto;} .edu .tl{margin-top:auto;}
+/* the same school is marked in both places at once */
+.edu:has(.ent:nth-child(1):hover) .tl .s1::after,.edu:has(.ent:nth-child(2):hover) .tl .s2::after,.tl .seg.s1:hover::after,.tl .seg.s2:hover::after{opacity:.55;}
+.edu:has(.tl .s1:hover) .ent:nth-child(1) h4,.edu:has(.tl .s2:hover) .ent:nth-child(2) h4,.edu .ent:hover h4{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--spot) 60%,transparent) 62% 92%,transparent 92%);}
+.edu .ent h4{display:inline;}
+.card.fresh .tl>*{clip-path:inset(-30px 100% -30px 0);}
+.card.draw .tl>*{animation:tlpen .5s cubic-bezier(.3,.5,.3,1) both;animation-delay:calc(140ms + var(--n,0)*65ms);}
+@keyframes tlpen{from{clip-path:inset(-30px 100% -30px -40px);}to{clip-path:inset(-30px -40px -30px -40px);}}
+@media (max-width:720px){.tl{margin:10px 26px 8px 4px;} .tl b{font-size:20px;}}
+[data-bpm]{font-variant-numeric:tabular-nums;white-space:nowrap;}
+.tl .seg{isolation:isolate;}
+.seqbar{flex-wrap:wrap;row-gap:8px;} .seqbar .lab{flex:1 1 100%;order:3;}
