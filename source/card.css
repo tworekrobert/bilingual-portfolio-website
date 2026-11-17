@@ -508,3 +508,74 @@ body.phys .card[style*="--dim"] .face::after{transition:none;}
 body.grabbing .side{opacity:0;}
 body.phys #deck *{touch-action:pan-y;}
 .sw{display:grid;text-align:left;} .sw>*{grid-area:1/1;} .sw>.off{visibility:hidden;}
+/* ---------- ink: pen lines are drawn once, notes are written once ---------- */
+@keyframes pen{from{clip-path:inset(-4px 100% -4px 0);}to{clip-path:inset(-4px 0 -4px 0);}}
+@keyframes wr{from{clip-path:inset(-30% 100% -30% -2%);}to{clip-path:inset(-30% -6% -30% -2%);}}
+.card.fresh .hd .sp,.card.fresh :is(.toc button,.links a,.does li,.chips .chip,.ent,.sk)::before,.card.fresh :is(.toc button,.links a,.does li,.chips .chip,.pb h5,.lnk)::after{clip-path:inset(0 100% 0 0);}
+.card.draw .hd .sp,.card.draw :is(.toc button,.links a,.does li,.chips .chip,.ent,.sk)::before,.card.draw :is(.toc button,.links a,.does li,.chips .chip,.pb h5,.lnk)::after{animation:pen .5s cubic-bezier(.3,.5,.3,1) both;animation-delay:calc(140ms + var(--n,0)*65ms);}
+.note .w{display:inline-block;}
+.note.writing .w{animation:wr 90ms linear backwards;}
+/* a link is underlined again, by hand, when the pointer is on it */
+.lnk:hover{background:none;color:var(--ink);border-color:var(--ink);}
+.lnk:hover::after{animation:pen .38s cubic-bezier(.3,.5,.3,1) both;}
+/* tabs are small cards too: they come up with a little too much push and can be pressed down */
+.tab{transition:transform .42s cubic-bezier(.3,1.7,.5,1),background .15s,color .15s;}
+.tab:active{transform:translateY(11px);transition-duration:.06s;}
+.btn:active,.flipk:active,.key:active{transform:translate(1px,2px);}
+@media (prefers-reduced-motion:reduce){.tab{transition-duration:.01s;}}
+/* the highlighter goes over a heading after the pen has written it */
+.note b{background-repeat:no-repeat;background-size:100% 100%;}
+.note.writing b{background-size:0 100%;}
+.note.writing.lit b{background-size:100% 100%;transition:background-size .32s ease-out var(--hd,0ms);}
+/* screenshots are stuck on: the picture is brought in at an angle, held above the card (its shadow is far), put down, pressed flat, then taped */
+@keyframes stick{0%{opacity:0;translate:var(--fx,26px) -36px;rotate:var(--fr,9deg);scale:1.2;box-shadow:0 0 0 1.5px var(--ink),11px 15px 0 var(--rule);}
+ 12%{opacity:1;}
+ 52%{translate:0 0;rotate:calc(var(--fr,9deg)*-.17);scale:1.03;box-shadow:0 0 0 1.5px var(--ink),2px 3px 0 var(--rule);}
+ 66%{scale:.962;rotate:calc(var(--fr,9deg)*.09);box-shadow:0 0 0 1.5px var(--ink),0 0 0 var(--rule);}
+ 83%{scale:1.012;rotate:calc(var(--fr,9deg)*-.03);}
+ 100%{translate:0 0;rotate:0deg;scale:1;box-shadow:0 0 0 1.5px var(--ink),0 0 0 var(--rule);}}
+@keyframes tape{0%{scale:0 1;}70%{scale:1.07 1;}100%{scale:1 1;}}
+.thumbs button::before{content:"";position:absolute;z-index:2;top:-4px;left:31%;width:38%;height:11px;background:color-mix(in srgb,var(--spot) 62%,transparent);transform:rotate(-2deg);transform-origin:0 50%;pointer-events:none;}
+.thumbs button:nth-child(2n)::before{left:26%;transform:rotate(2.4deg);} .thumbs button:nth-child(3n)::before{left:36%;transform:rotate(-.8deg);}
+.thumbs button:nth-child(2n){--fx:-22px;--fr:-8deg;} .thumbs button:nth-child(3n){--fx:14px;--fr:6deg;}
+.note.writing .thumbs button{animation:stick .54s cubic-bezier(.35,.6,.35,1) backwards var(--sd,0ms);}
+.note.writing .thumbs button::before{animation:tape .2s ease-out backwards calc(var(--sd,0ms) + 390ms);}
+.plate::after{transform-origin:0 50%;}
+.card.fresh .plate:not(.art){visibility:hidden;}
+.card.draw .plate:not(.art){--fx:-30px;--fr:-5deg;animation:stick .58s cubic-bezier(.35,.6,.35,1) backwards .14s;}
+.card.draw .plate:not(.art)::after{animation:tape .22s ease-out backwards .55s;}
+/* ---------- sticker: a corner lifts under the pointer, and it can be moved ---------- */
+.sticker{z-index:5;cursor:grab;touch-action:none;translate:var(--px,0px) var(--py,0px);transition:scale .16s,rotate .16s;--f:0px;}
+.sticker::before,.sticker::after{content:"";position:absolute;right:0;bottom:0;width:var(--f);height:var(--f);transition:width .18s cubic-bezier(.3,.8,.3,1),height .18s cubic-bezier(.3,.8,.3,1);pointer-events:none;}
+.sticker::before{background:var(--stock);clip-path:polygon(100% 0,100% 100%,0 100%);box-shadow:none;}
+.sticker::after{background:color-mix(in srgb,var(--spot) 70%,var(--spot-ink));clip-path:polygon(0 0,100% 0,0 100%);}
+@media (hover:hover){.sticker:hover{--f:17px;}}
+.sticker.up{--f:0px;scale:1.07;rotate:2.5deg;cursor:grabbing;}
+@keyframes press{from{scale:1.07;}55%{scale:.955;}to{scale:1;}}
+.sticker.stuck{animation:press .26s cubic-bezier(.3,.7,.3,1);}
+@media (max-width:720px){.sticker{translate:none;cursor:default;touch-action:auto;}}
+/* sending stamps the date on the note */
+@keyframes stamped{0%{opacity:0;scale:1.9;rotate:6deg;}55%{opacity:1;scale:.94;rotate:-9deg;}75%{scale:1.03;}100%{opacity:1;scale:1;rotate:-8deg;}}
+.stamped{position:absolute;right:8%;top:38%;padding:5px 14px 3px;font:400 30px/1 "Hand",var(--sans);-webkit-text-stroke:.6px currentColor;letter-spacing:.04em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 78%,var(--stock));box-shadow:inset 0 0 0 2.5px currentColor,0 0 0 2px var(--stock),0 0 0 3.5px currentColor;border-radius:4px 7px 5px 8px/7px 4px 8px 5px;rotate:-8deg;pointer-events:none;animation:stamped .3s cubic-bezier(.3,.7,.3,1) .1s backwards;}
+/* ---------- education: one pen line from 2018 to 2027 ---------- */
+.tl{position:relative;flex:none;height:64px;margin:0 34px 4px 8px;}
+.tl .seg{position:absolute;top:0;height:26px;cursor:default;}
+.tl .seg::before{content:"";position:absolute;left:0;right:0;top:10px;height:6px;background:var(--ink);-webkit-mask:var(--p1) center/100% 100% no-repeat;mask:var(--p1) center/100% 100% no-repeat;}
+.tl .seg::after{content:"";position:absolute;left:-2px;right:-2px;top:5px;height:16px;background:var(--spot);opacity:0;z-index:-1;border-radius:3px 6px 4px 7px/6px 3px 7px 4px;transition:opacity .15s;}
+.tl .s1::before{-webkit-mask-image:var(--p2);mask-image:var(--p2);} .tl .s0::before{background:var(--rule);-webkit-mask-image:var(--p3);mask-image:var(--p3);}
+.tl b{position:absolute;top:26px;translate:-50% 0;font:400 25px/1 "Biro","Hand",cursive;color:var(--ink);white-space:nowrap;padding-top:8px;}
+.tl b::before{content:"";position:absolute;left:50%;top:-22px;width:2.5px;height:22px;margin-left:-1px;background:var(--ink);border-radius:2px;rotate:4deg;}
+.tl b:first-of-type{translate:0 0;} .tl b:first-of-type::before{left:1px;} .tl b.e{translate:-100% 0;} .tl b.e::before{left:auto;right:0;}
+.tl b.now{top:-22px;padding:0 0 0;color:var(--soft);font-size:22px;} .tl b.now::before{top:24px;height:14px;background:var(--soft);rotate:-5deg;}
+.edu .grid4{flex:0 1 auto;} .edu .tl{margin-top:auto;}
+/* the same school is marked in both places at once */
+.edu:has(.ent:nth-child(1):hover) .tl .s1::after,.edu:has(.ent:nth-child(2):hover) .tl .s2::after,.tl .seg.s1:hover::after,.tl .seg.s2:hover::after{opacity:.55;}
+.edu:has(.tl .s1:hover) .ent:nth-child(1) h4,.edu:has(.tl .s2:hover) .ent:nth-child(2) h4,.edu .ent:hover h4{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--spot) 60%,transparent) 62% 92%,transparent 92%);}
+.edu .ent h4{display:inline;}
+.card.fresh .tl>*{clip-path:inset(-30px 100% -30px 0);}
+.card.draw .tl>*{animation:tlpen .5s cubic-bezier(.3,.5,.3,1) both;animation-delay:calc(140ms + var(--n,0)*65ms);}
+@keyframes tlpen{from{clip-path:inset(-30px 100% -30px -40px);}to{clip-path:inset(-30px -40px -30px -40px);}}
+@media (max-width:720px){.tl{margin:10px 26px 8px 4px;} .tl b{font-size:20px;}}
+[data-bpm]{font-variant-numeric:tabular-nums;white-space:nowrap;}
+.tl .seg{isolation:isolate;}
+.seqbar{flex-wrap:wrap;row-gap:8px;} .seqbar .lab{flex:1 1 100%;order:3;}
