@@ -579,3 +579,26 @@ body.phys #deck *{touch-action:pan-y;}
 [data-bpm]{font-variant-numeric:tabular-nums;white-space:nowrap;}
 .tl .seg{isolation:isolate;}
 .seqbar{flex-wrap:wrap;row-gap:8px;} .seqbar .lab{flex:1 1 100%;order:3;}
+/* ---------- the CV page on the table ---------- */
+#cvs{position:fixed;inset:0;z-index:450;display:none;align-items:center;justify-content:center;padding:3vh 3vw;background:color-mix(in srgb,var(--table) 84%,transparent);perspective:1400px;}
+#cvs.show{display:flex;}
+.cvwrap{display:flex;align-items:flex-end;gap:30px;max-height:100%;}
+.cvpage{height:min(92vh,1120px);aspect-ratio:1240/1754;background:#fff;border-radius:3px;box-shadow:8px 9px 0 var(--shadow);cursor:zoom-in;flex:none;}
+.cvpage img{display:block;width:100%;height:100%;border-radius:3px;}
+.cvnote{width:232px;flex:none;margin-bottom:6%;background:var(--stock);color:var(--ink);border-radius:16px;padding:20px 20px 18px;display:flex;flex-direction:column;gap:10px;box-shadow:1px 1px 0 var(--edge),2px 2px 0 var(--edge),3px 3px 0 var(--edge),7px 8px 0 var(--shadow);rotate:2.2deg;}
+.cvnote h3{font:400 34px/1 "Biro","Hand",cursive;margin:0;}
+.cvnote .when{font:400 15px/1.2 var(--sans);color:var(--soft);margin:-4px 0 6px;}
+.cvnote .btn{width:100%;justify-content:flex-start;}
+.sticker:focus-visible{outline:2.5px solid var(--ink);outline-offset:5px;}
+@media (max-width:720px){
+ #cvs{display:none;align-items:flex-start;overflow-y:auto;padding:14px 12px 0;}
+ #cvs.show{display:block;}
+ .cvwrap{flex-direction:column;align-items:stretch;gap:14px;}
+ .cvpage{height:auto;width:100%;}
+ .cvnote{position:sticky;bottom:10px;width:auto;margin:0 0 10px;rotate:0deg;display:grid;grid-template-columns:1fr 1fr;padding:14px;}
+ .cvnote h3,.cvnote .when{display:none;} .cvnote .btn[data-cvd]{grid-column:1/-1;}
+}
+@media (max-height:520px) and (min-width:721px){.cvpage{height:94vh;} .cvnote{margin-bottom:0;}}
+.cvnote{width:252px;} .cvnote .btn{white-space:nowrap;padding:0 16px;}
+.sticker{cursor:pointer;} .sticker.up{cursor:grabbing;}
+@media (max-width:720px){.cvnote{width:auto;} .cvnote .btn{padding:0 10px;font-size:15px;gap:7px;}}
