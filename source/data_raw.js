@@ -7,16 +7,16 @@ const I18N={
     sticky_p_before:"Finishing my B.Eng. thesis — graduating February 2027.",
     sticky_p_after:"Looking for my first commercial role — let's talk.",
     vol_ui:"Interface sounds", welcome_h:"Hey, quick thing before you dive in", welcome_p:"If you're a recruiter short on time, there's a clean plain-text summary of everything. Or feel free to just explore the desktop as-is.", welcome_btn1:"Show me the plain text view", welcome_btn2:"I'll explore the desktop", about_h:"Backstory", mn_about:"About Robert", mn_cv:"Résumé…", mn_contact:"Contact…", mn_projects:"Projects", mn_tidy:"Tidy windows", about_p:"Before code, it was music, and not just as a hobby: I made beats in FL Studio, sold them online, talked with artists and ran my own store. Plugins made me curious how software works, which led me to C# and desktop apps. Now I'm building an audio analysis app.",
-    avail_h:"Now", avail_p:"Prompt engineer at a healthcare voice AI company, working on AI agents for US healthcare practices.",
+    avail_h:"Now", avail_p:"Final semester, finishing my thesis and looking for my first commercial role.",
     dicon_resume:"Resume", dicon_github:"GitHub",
     widget_title:"WHAT I BUILD WITH", w1:".NET backend", w2:"Testing & delivery", w3:"Frontend & desktop",
     finder_title:"Robert Tworek",
     f_welcome:"Welcome",
     w_hi:"Hi, I'm Robert 👋", w_sub:"Junior C#/.NET developer · Wrocław, Poland",
-    w_p1:"My name's Robert. I'm in my final semester of Technical Computer Science at Wrocław University of Science and Technology, finishing my engineering thesis and graduating in <b>February 2027</b>. Since November 2026 I've been working as a <b>prompt engineer at a healthcare voice AI company</b>.",
+    w_p1:"My name's Robert. I'm in my final semester of Technical Computer Science at Wrocław University of Science and Technology, finishing my engineering thesis and graduating in <b>February 2027</b>. I'm looking for my first commercial role as a junior AI / .NET developer.",
     w_p2:"Funny thing is, it all started with music. I spent years making beats in FL Studio, and it was more than a hobby: I sold them online, talked with artists and ran my own online store. At some point the plugins got way more interesting than the beats: how they actually worked, what was going on under the hood. That curiosity is what pulled me into <b>C# and .NET</b>, and from there into building web and desktop apps.",
     w_p3:"These days I mostly build backends with ASP.NET Core and PostgreSQL and desktop apps with Avalonia, and I like having real tests behind my code. I recently did a short internship at KODA.AI (chatbot testing and workflow automation), and on the side I'm building a desktop app for audio signal analysis and visualization, so the music never really left.",
-    w_c1:"🎓 Graduating Feb 2027", w_c2:"📍 Wrocław, Poland", w_c3:"💼 Prompt engineer at a healthcare voice AI company", w_c4:"🗣️ Polish · English (B2)",
+    w_c1:"🎓 Graduating Feb 2027", w_c2:"📍 Wrocław, Poland", w_c3:"💼 Looking for first role", w_c4:"🗣️ Polish · English (B2)",
     w_b1:"See my projects →", w_b2:"Open my CV", w_b3:"Say hi ✉️",
     w_hint:"✨ This whole thing works like a little desktop: drag the windows around, try the terminal, put some music on, or press Ctrl+K to jump anywhere.",
     p1_title:"Order Flow Management System",
@@ -45,7 +45,7 @@ const I18N={
     f_p3_team:"— team project, 3 people",
     f_p3_desc:"Desktop pharmacy system: sales, prescriptions, batch inventory, deliveries, reports and audit. I was mainly responsible for the relational data model — constraints, views, roles, demo data, SQL smoke tests and technical documentation.",
     f_p3_meta:"10+ modules · sensitive-data encryption · Windows + macOS distribution",
-    repo_link:"Repository →", live_link:"Open live site →", f_hard:"Toughest part", f_shots:"Screenshots", shot_zoom:"Enlarge screenshot", avail_badge:"Prompt engineer at a healthcare voice AI company", badge_subject:"Hi Robert", badge_tip:"Click to write to me",
+    repo_link:"Repository →", live_link:"Open live site →", f_hard:"Toughest part", f_shots:"Screenshots", shot_zoom:"Enlarge screenshot", avail_badge:"Looking for first commercial role", badge_subject:"Hi Robert", badge_tip:"Click to write to me",
     sg1_t:"Core stack", sg1_note:"APIs, business logic, authorization, transactions and data access — C# · .NET · ASP.NET Core · EF Core · PostgreSQL · REST API",
     sg2_t:"Frontend & desktop", sg2_note:"operations panels, forms and cross-platform apps — React · TypeScript · Avalonia UI · MVVM · Next.js",
     sg3_t:"Testing & DevOps", sg3_note:"multi-level testing, containerization and CI — xUnit · Testcontainers · Playwright · Docker · GitHub Actions",
@@ -102,16 +102,16 @@ const I18N={
     sticky_p_before:"Kończę pracę inżynierską — obrona w lutym 2027.",
     sticky_p_after:"Szukam pierwszej komercyjnej pracy — napisz do mnie.",
     vol_ui:"Dźwięki interfejsu", welcome_h:"Zanim zaczniesz, jedna rzecz", welcome_p:"Jeśli jesteś rekruterem i masz mało czasu, jest czytelne podsumowanie w formie zwykłego tekstu. Możesz też po prostu rozejrzeć się po pulpicie.", welcome_btn1:"Pokaż mi widok tekstowy", welcome_btn2:"Chcę rozejrzeć się po pulpicie", about_h:"Historia", mn_about:"O Robercie", mn_cv:"CV…", mn_contact:"Kontakt…", mn_projects:"Projekty", mn_tidy:"Uporządkuj okna", about_p:"Zanim był kod, była muzyka, i to nie tylko hobbystycznie: robiłem bity w FL Studio, sprzedawałem je online, rozmawiałem z artystami i prowadziłem własny sklep. Wtyczki zaciekawiły mnie tym, jak działa oprogramowanie, i tak trafiłem do C#. Teraz buduję aplikację do analizy audio.",
-    avail_h:"Teraz", avail_p:"Prompt engineer w firmie od botów medycznych, przy agentach AI dla amerykańskich placówek medycznych.",
+    avail_h:"Teraz", avail_p:"Ostatni semestr, kończę pracę dyplomową i szukam pierwszej pracy komercyjnej.",
     dicon_resume:"CV", dicon_github:"GitHub",
     widget_title:"W CZYM PRACUJĘ", w1:"Backend .NET", w2:"Testy i wdrożenia", w3:"Frontend i desktop",
     finder_title:"Robert Tworek",
     f_welcome:"Start",
     w_hi:"Cześć, jestem Robert 👋", w_sub:"Junior C#/.NET developer · Wrocław",
-    w_p1:"Nazywam się Robert. Jestem na ostatnim semestrze Informatyki Technicznej na Politechnice Wrocławskiej, kończę pracę inżynierską i bronię się w <b>lutym 2027</b>. Od listopada 2026 pracuję jako <b>prompt engineer w firmie od botów medycznych</b>.",
+    w_p1:"Nazywam się Robert. Jestem na ostatnim semestrze Informatyki Technicznej na Politechnice Wrocławskiej, kończę pracę inżynierską i bronię się w <b>lutym 2027</b>. Szukam pierwszej pracy komercyjnej jako junior AI / .NET developer.",
     w_p2:"Co zabawne, wszystko zaczęło się od muzyki. Latami robiłem bity w FL Studio i to było coś więcej niż hobby: sprzedawałem je online, rozmawiałem z artystami i prowadziłem własny sklep internetowy. W pewnym momencie wtyczki zaczęły mnie ciekawić bardziej niż same bity: jak to właściwie działa, co dzieje się pod maską. Ta ciekawość wciągnęła mnie w <b>C# i .NET</b>, a potem w tworzenie aplikacji webowych i desktopowych.",
     w_p3:"Dziś najczęściej piszę backendy w ASP.NET Core z PostgreSQL i aplikacje desktopowe w Avalonii, a za kodem lubię mieć porządne testy. Niedawno odbyłem krótki staż w KODA.AI (testowanie chatbotów i automatyzacja procesów), a po godzinach buduję aplikację desktopową do analizy i wizualizacji sygnału audio, więc muzyka tak naprawdę nigdy nie odeszła.",
-    w_c1:"🎓 Obrona: luty 2027", w_c2:"📍 Wrocław", w_c3:"💼 Prompt engineer w firmie od botów medycznych", w_c4:"🗣️ polski · angielski (B2)",
+    w_c1:"🎓 Obrona: luty 2027", w_c2:"📍 Wrocław", w_c3:"💼 Szukam pierwszej pracy", w_c4:"🗣️ polski · angielski (B2)",
     w_b1:"Zobacz moje projekty →", w_b2:"Otwórz CV", w_b3:"Napisz do mnie ✉️",
     w_hint:"✨ Całość działa jak mały pulpit: przeciągaj okna, zajrzyj do terminala, puść muzykę albo wciśnij Ctrl+K, żeby przejść gdziekolwiek.",
     p1_title:"Order Flow Management System",
@@ -140,7 +140,7 @@ const I18N={
     f_p3_team:"— projekt zespołowy, 3 osoby",
     f_p3_desc:"Desktopowy system dla apteki: sprzedaż, recepty, magazyn partii, dostawy, raporty i audyt. Odpowiadałem głównie za model relacyjny — ograniczenia, widoki, role, dane demo, testy SQL i dokumentację techniczną.",
     f_p3_meta:"10+ modułów · szyfrowanie danych wrażliwych · dystrybucja Windows + macOS",
-    repo_link:"Repozytorium →", live_link:"Otwórz stronę →", f_hard:"Najtrudniejsze", f_shots:"Zrzuty ekranu", shot_zoom:"Powiększ zrzut ekranu", avail_badge:"Prompt engineer w firmie od botów medycznych", badge_subject:"Cześć Robert", badge_tip:"Kliknij, żeby napisać",
+    repo_link:"Repozytorium →", live_link:"Otwórz stronę →", f_hard:"Najtrudniejsze", f_shots:"Zrzuty ekranu", shot_zoom:"Powiększ zrzut ekranu", avail_badge:"Szukam pierwszej pracy komercyjnej", badge_subject:"Cześć Robert", badge_tip:"Kliknij, żeby napisać",
     sg1_t:"Główny stack", sg1_note:"API, logika biznesowa, autoryzacja, transakcje i dostęp do danych — C# · .NET · ASP.NET Core · EF Core · PostgreSQL · REST API",
     sg2_t:"Frontend i desktop", sg2_note:"panele operacyjne, formularze i aplikacje wieloplatformowe — React · TypeScript · Avalonia UI · MVVM · Next.js",
     sg3_t:"Testy i DevOps", sg3_note:"testy na kilku poziomach, konteneryzacja i CI — xUnit · Testcontainers · Playwright · Docker · GitHub Actions",
@@ -225,13 +225,6 @@ const NOTES=[
  {id:'edu',t:{en:'Education',pl:'Edukacja'},sub:{en:'2018 — now',pl:'2018 — obecnie'},
   html:(L,l)=>`<span class="period">${L.edu1_period}</span><h4>Wrocław University of Science and Technology</h4><p>${L.edu1_body}</p>
     <span class="period">${L.edu2_period}</span><h4>Electronic Schools Complex, Bolesławiec</h4><p>${L.edu2_body}</p>`},
- {id:'job',t:{en:'Healthcare voice AI',pl:'Voiceboty medyczne'},sub:{en:'Nov 2026',pl:'Lis 2026'},
-  html:(L,l)=>l==='pl'?`<span class="period">Od listopada 2026 · praca zdalna</span><h4>Healthcare voice AI — Prompt Engineer</h4>
-    <ul><li>Prompt engineering dla agentów AI, którzy obsługują kontakt pacjentów z amerykańskimi placówkami medycznymi: rozmowy telefoniczne, czat na stronie i SMS.</li>
-    <li>Projektowanie i testowanie promptów, analiza prawdziwych rozmów z pacjentami pod kątem błędów oraz ocena jakości agentów przed zmianami i po nich.</li></ul>`
-   :`<span class="period">Since November 2026 · remote</span><h4>Healthcare voice AI — Prompt Engineer</h4>
-    <ul><li>Prompt engineering for AI agents that handle communication between patients and US healthcare practices over voice calls, web chat and SMS.</li>
-    <li>Designing and testing prompts, analysing real patient conversations for failure patterns, and evaluating agent quality before and after changes.</li></ul>`},
  {id:'koda',t:{en:'KODA.AI',pl:'KODA.AI'},sub:{en:'Sep 2026',pl:'Wrz 2026'},
   html:(L,l)=>l==='pl'?`<span class="period">Wrzesień i październik 2026 · praktyki, 160 godzin</span><h4>KODA.AI — praktykant, Generative Prompt Engineer</h4>
     <ul><li>Praca na platformie konwersacyjnej AI KODA: testowanie chatbotów i voicebotów, weryfikacja promptów i baz wiedzy oraz ocena przebiegu rozmów.</li>
@@ -267,13 +260,13 @@ const NOTES=[
     return G.map(([h,t])=>`<h4>${h}</h4><p>${t}</p>`).join(''); }},
  {id:'now',t:{en:'Now',pl:'Teraz'},sub:{en:'right now',pl:'teraz'},
   html:(L,l)=>l==='pl'?`<span class="period">listopad 2026</span><h4>Co robię teraz</h4>
-    <ul><li>Pracuję zdalnie w firmie od botów medycznych jako prompt engineer.</li>
-    <li>Ostatni semestr informatyki technicznej na Politechnice Wrocławskiej, obrona pracy inżynierskiej w lutym 2027.</li>
+    <ul><li>Ostatni semestr informatyki technicznej na Politechnice Wrocławskiej, obrona pracy inżynierskiej w lutym 2027.</li>
+    <li>Szukam pierwszej pracy komercyjnej jako junior AI / .NET developer.</li>
     <li>Buduję aplikację desktopową do analizy i wizualizacji sygnału audio.</li></ul>
     <div class="nact"><button class="btn btn-send" data-nmail>Napisz do mnie →</button></div>`
    :`<span class="period">November 2026</span><h4>What I'm up to</h4>
-    <ul><li>Working remotely at a healthcare voice AI company as a prompt engineer.</li>
-    <li>Final semester of Technical Computer Science at Wrocław University of Science and Technology; thesis defence in February 2027.</li>
+    <ul><li>Final semester of Technical Computer Science at Wrocław University of Science and Technology; thesis defence in February 2027.</li>
+    <li>Looking for my first commercial role as a junior AI / .NET developer.</li>
     <li>Building a desktop app for audio signal analysis and visualization.</li></ul>
     <div class="nact"><button class="btn btn-send" data-nmail>Write to me →</button></div>`}
 ];
