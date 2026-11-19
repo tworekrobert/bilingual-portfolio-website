@@ -559,7 +559,7 @@ body.phys .card:not(.bk) .face.front,body.phys .card.bk .face.back{visibility:vi
 body.phys .card:not(.bk) .face.back,body.phys .card.bk .face.front{visibility:hidden;}
 body.grabbing,body.grabbing *{cursor:grabbing !important;-webkit-user-select:none;user-select:none;}
 body.phys .card.past .face::after{opacity:calc(.3*var(--dim,1));}
-body.phys .card[style*="--dim"] .face::after{transition:none;}
+body.phys .card.dimmed .face::after{transition:none;}
 .side{transition:background .15s,color .15s,box-shadow .15s,opacity .2s;}
 body.grabbing .side{opacity:0;}
 body.phys #deck *{touch-action:pan-y;}
@@ -600,6 +600,12 @@ body.phys #deck *{touch-action:pan-y;}
 .card.fresh .plate:not(.art){visibility:hidden;}
 .card.draw .plate:not(.art){--fx:-30px;--fr:-5deg;animation:stick .58s cubic-bezier(.35,.6,.35,1) backwards .14s;}
 .card.draw .plate:not(.art)::after{animation:tape .22s ease-out backwards .55s;}
+/* the duotone on a screenshot is worked out once on its own layer instead of on every frame something
+   beside it moves, and while pen lines are drawn and pictures stuck on, each of them is its own small
+   layer, so a card on its first visit repaints only the piece that is changing, not the whole card */
+body.phys .plate img,body.phys .thumbs img{will-change:transform;}
+body.phys .card.draw .plate:not(.art),body.phys .note.writing .thumbs button{will-change:transform;}
+body.phys .card.draw .hd .sp,body.phys .card.draw :is(.toc button,.links a,.does li,.chips .chip,.ent,.sk)::before,body.phys .card.draw :is(.toc button,.links a,.does li,.chips .chip,.pb h5,.lnk)::after{will-change:transform;}
 /* ---------- sticker: a corner lifts under the pointer, and it can be moved ---------- */
 .sticker{z-index:5;cursor:grab;touch-action:none;translate:var(--px,0px) var(--py,0px);transition:scale .16s,rotate .16s;--f:0px;}
 .sticker::before,.sticker::after{content:"";position:absolute;right:0;bottom:0;width:var(--f);height:var(--f);transition:width .18s cubic-bezier(.3,.8,.3,1),height .18s cubic-bezier(.3,.8,.3,1);pointer-events:none;}
@@ -1355,19 +1361,19 @@ function held(){
  if(g.i===cur&&g.dx<=0){
   const end=cur===els.length-1,x=end?g.dx*.22:g.dx;
   carry(cb,cb.tx+x,cb.ty+g.dy*(end?.08:.3));cb.h.r=lean+x/w*4*g.side;cb.h.l=16;
-  if(pb&&pb.held){pb.held=false;pb.h.r=pb.h.s=pb.h.l=0;pb.el.style.removeProperty('--dim');pb.zp=true;pb.zd=Math.abs(pb.x-pb.tx);}
+  if(pb&&pb.held){pb.held=false;pb.h.r=pb.h.s=pb.h.l=0;pb.el.style.removeProperty('--dim');pb.el.classList.remove('dimmed');pb.zp=true;pb.zd=Math.abs(pb.x-pb.tx);}
   g.p=0;return;
  }
  if(!pb){carry(cb,cb.tx+g.dx*.22,cb.ty+g.dy*.08);cb.h.l=16;g.p=0;return;}
  const span=-pb.tx;let p=(g.i===cur?g.dx*1.5:g.dx)/span;p=p>1?1+(p-1)*.15:Math.max(-.06,p);const q=Math.max(0,Math.min(1,p));
- carry(pb,pb.tx+span*p,pb.ty*(1-q)+g.dy*.2);pb.h.r=-pb.tr*q+lean;pb.h.s=(1-pb.ts)*q;pb.h.l=16*Math.min(1,q*3);pb.el.style.zIndex=150;pb.el.style.setProperty('--dim',1-q);
+ carry(pb,pb.tx+span*p,pb.ty*(1-q)+g.dy*.2);pb.h.r=-pb.tr*q+lean;pb.h.s=(1-pb.ts)*q;pb.h.l=16*Math.min(1,q*3);pb.el.style.zIndex=150;pb.el.style.setProperty('--dim',1-q);pb.el.classList.add('dimmed');
  if(g.i===cur){carry(cb,cb.tx+g.dx*.06,cb.ty);cb.h.r=0;cb.h.l=0;}
  g.p=p;
 }
 function letGo(){
  const g=grab;if(!g)return;grab=null;document.body.classList.remove('grabbing');
  const cb=B[cur],pb=B[cur-1];
- [cb,pb].forEach(b=>{if(b){b.held=false;b.el.style.removeProperty('--dim');b.h.r=b.h.s=b.h.l=b.h.x=0;}});
+ [cb,pb].forEach(b=>{if(b){b.held=false;b.el.style.removeProperty('--dim');b.el.classList.remove('dimmed');b.h.r=b.h.s=b.h.l=b.h.x=0;}});
  if(!g.on){wake();return;}
  dragged=true;setTimeout(()=>{dragged=false;},60);
  const v=Math.max(-4200,Math.min(4200,g.v));let to=cur,mv=null;
