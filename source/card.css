@@ -503,7 +503,7 @@ body.phys .card:not(.bk) .face.front,body.phys .card.bk .face.back{visibility:vi
 body.phys .card:not(.bk) .face.back,body.phys .card.bk .face.front{visibility:hidden;}
 body.grabbing,body.grabbing *{cursor:grabbing !important;-webkit-user-select:none;user-select:none;}
 body.phys .card.past .face::after{opacity:calc(.3*var(--dim,1));}
-body.phys .card[style*="--dim"] .face::after{transition:none;}
+body.phys .card.dimmed .face::after{transition:none;}
 .side{transition:background .15s,color .15s,box-shadow .15s,opacity .2s;}
 body.grabbing .side{opacity:0;}
 body.phys #deck *{touch-action:pan-y;}
@@ -544,6 +544,12 @@ body.phys #deck *{touch-action:pan-y;}
 .card.fresh .plate:not(.art){visibility:hidden;}
 .card.draw .plate:not(.art){--fx:-30px;--fr:-5deg;animation:stick .58s cubic-bezier(.35,.6,.35,1) backwards .14s;}
 .card.draw .plate:not(.art)::after{animation:tape .22s ease-out backwards .55s;}
+/* the duotone on a screenshot is worked out once on its own layer instead of on every frame something
+   beside it moves, and while pen lines are drawn and pictures stuck on, each of them is its own small
+   layer, so a card on its first visit repaints only the piece that is changing, not the whole card */
+body.phys .plate img,body.phys .thumbs img{will-change:transform;}
+body.phys .card.draw .plate:not(.art),body.phys .note.writing .thumbs button{will-change:transform;}
+body.phys .card.draw .hd .sp,body.phys .card.draw :is(.toc button,.links a,.does li,.chips .chip,.ent,.sk)::before,body.phys .card.draw :is(.toc button,.links a,.does li,.chips .chip,.pb h5,.lnk)::after{will-change:transform;}
 /* ---------- sticker: a corner lifts under the pointer, and it can be moved ---------- */
 .sticker{z-index:5;cursor:grab;touch-action:none;translate:var(--px,0px) var(--py,0px);transition:scale .16s,rotate .16s;--f:0px;}
 .sticker::before,.sticker::after{content:"";position:absolute;right:0;bottom:0;width:var(--f);height:var(--f);transition:width .18s cubic-bezier(.3,.8,.3,1),height .18s cubic-bezier(.3,.8,.3,1);pointer-events:none;}
