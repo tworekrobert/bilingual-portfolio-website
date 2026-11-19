@@ -7,7 +7,7 @@ const I18N={
     sticky_p_before:"Finishing my B.Eng. thesis — graduating February 2027.",
     sticky_p_after:"Looking for my first commercial role — let's talk.",
     vol_ui:"Interface sounds", welcome_h:"Hey, quick thing before you dive in", welcome_p:"If you're a recruiter short on time, there's a clean plain-text summary of everything. Or feel free to just explore the desktop as-is.", welcome_btn1:"Show me the plain text view", welcome_btn2:"I'll explore the desktop", about_h:"Backstory", mn_about:"About Robert", mn_cv:"Résumé…", mn_contact:"Contact…", mn_projects:"Projects", mn_tidy:"Tidy windows", about_p:"Before code, it was music, and not just as a hobby: I made beats in FL Studio, sold them online, talked with artists and ran my own store. Plugins made me curious how software works, which led me to C# and desktop apps. Now I'm building an audio analysis app.",
-    avail_h:"Now", avail_p:"Prompt engineer at a healthcare voice AI company, working on voicebots and chatbots for healthcare clinics in the US.",
+    avail_h:"Now", avail_p:"Prompt engineer at a healthcare voice AI company, working on AI agents for US healthcare practices.",
     dicon_resume:"Resume", dicon_github:"GitHub",
     widget_title:"WHAT I BUILD WITH", w1:".NET backend", w2:"Testing & delivery", w3:"Frontend & desktop",
     finder_title:"Robert Tworek",
@@ -102,7 +102,7 @@ const I18N={
     sticky_p_before:"Kończę pracę inżynierską — obrona w lutym 2027.",
     sticky_p_after:"Szukam pierwszej komercyjnej pracy — napisz do mnie.",
     vol_ui:"Dźwięki interfejsu", welcome_h:"Zanim zaczniesz, jedna rzecz", welcome_p:"Jeśli jesteś rekruterem i masz mało czasu, jest czytelne podsumowanie w formie zwykłego tekstu. Możesz też po prostu rozejrzeć się po pulpicie.", welcome_btn1:"Pokaż mi widok tekstowy", welcome_btn2:"Chcę rozejrzeć się po pulpicie", about_h:"Historia", mn_about:"O Robercie", mn_cv:"CV…", mn_contact:"Kontakt…", mn_projects:"Projekty", mn_tidy:"Uporządkuj okna", about_p:"Zanim był kod, była muzyka, i to nie tylko hobbystycznie: robiłem bity w FL Studio, sprzedawałem je online, rozmawiałem z artystami i prowadziłem własny sklep. Wtyczki zaciekawiły mnie tym, jak działa oprogramowanie, i tak trafiłem do C#. Teraz buduję aplikację do analizy audio.",
-    avail_h:"Teraz", avail_p:"Prompt engineer w firmie od botów medycznych, przy voicebotach i chatbotach dla klinik i przychodni w USA.",
+    avail_h:"Teraz", avail_p:"Prompt engineer w firmie od botów medycznych, przy agentach AI dla amerykańskich placówek medycznych.",
     dicon_resume:"CV", dicon_github:"GitHub",
     widget_title:"W CZYM PRACUJĘ", w1:"Backend .NET", w2:"Testy i wdrożenia", w3:"Frontend i desktop",
     finder_title:"Robert Tworek",
@@ -227,11 +227,11 @@ const NOTES=[
     <span class="period">${L.edu2_period}</span><h4>Electronic Schools Complex, Bolesławiec</h4><p>${L.edu2_body}</p>`},
  {id:'job',t:{en:'Healthcare voice AI',pl:'Voiceboty medyczne'},sub:{en:'Nov 2026',pl:'Lis 2026'},
   html:(L,l)=>l==='pl'?`<span class="period">Od listopada 2026 · praca zdalna</span><h4>Healthcare voice AI — Prompt Engineer</h4>
-    <ul><li>Prompt engineering dla voicebotów i chatbotów, z których korzystają kliniki i przychodnie na rynku amerykańskim.</li>
-    <li>W pełni zdalnie, równolegle z ostatnim semestrem studiów.</li></ul>`
+    <ul><li>Prompt engineering dla agentów AI, którzy obsługują kontakt pacjentów z amerykańskimi placówkami medycznymi: rozmowy telefoniczne, czat na stronie i SMS.</li>
+    <li>Projektowanie i testowanie promptów, analiza prawdziwych rozmów z pacjentami pod kątem błędów oraz ocena jakości agentów przed zmianami i po nich.</li></ul>`
    :`<span class="period">Since November 2026 · remote</span><h4>Healthcare voice AI — Prompt Engineer</h4>
-    <ul><li>Prompt engineering for voicebots and chatbots used by healthcare clinics in the US market.</li>
-    <li>Fully remote, alongside my final semester at university.</li></ul>`},
+    <ul><li>Prompt engineering for AI agents that handle communication between patients and US healthcare practices over voice calls, web chat and SMS.</li>
+    <li>Designing and testing prompts, analysing real patient conversations for failure patterns, and evaluating agent quality before and after changes.</li></ul>`},
  {id:'koda',t:{en:'KODA.AI',pl:'KODA.AI'},sub:{en:'Sep 2026',pl:'Wrz 2026'},
   html:(L,l)=>l==='pl'?`<span class="period">Wrzesień i październik 2026 · praktyki, 160 godzin</span><h4>KODA.AI — praktykant, Generative Prompt Engineer</h4>
     <ul><li>Praca na platformie konwersacyjnej AI KODA: testowanie chatbotów i voicebotów, weryfikacja promptów i baz wiedzy oraz ocena przebiegu rozmów.</li>
