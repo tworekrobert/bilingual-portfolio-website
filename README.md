@@ -29,13 +29,13 @@
 
 ## About
 
-This is the portfolio of Robert Tworek, a Technical Computer Science student at Wroclaw University of Science and Technology and an AI and .NET developer (LLM agents, automation, ASP.NET Core backends) looking for a first commercial role. The site has three main projects (OrderFlow, Helpdesk, Pharmacy), an "Other projects" card that fills itself from GitHub, experience, education, skills and a contact card.
+This is the portfolio of Robert Tworek, a Technical Computer Science student at Wroclaw University of Science and Technology and an AI and .NET developer (LLM agents, automation, ASP.NET Core backends) working as a prompt engineer at Talkie.ai. The site has three main projects (OrderFlow, Helpdesk, Pharmacy), an "Other projects" card that fills itself from GitHub, experience, education with courses, skills and a contact card.
 
 ## What's in the deck
 
 | Card | What it holds |
 | --- | --- |
-| Hi! | Introduction, the "Open to work" sticker and a grouped contents list. |
+| Hi! | Introduction, a sticker with the current role and a grouped contents list. |
 | Backstory | How music led to code, with a small drum sequencer to play with. |
 | Experience, Education, Skills | Short notes written in the first person, details on the back. |
 | Order Flow, Helpdesk, Pharmacy | One card each: what it is, three facts, the stack. Back: why I built it, what is inside, the hardest part, screenshots. |
@@ -49,7 +49,7 @@ This is the portfolio of Robert Tworek, a Technical Computer Science student at 
 - **A beat you can feel.** While the sequencer plays, each kick lifts the card off its shadow and jolts the stack, the snare flicks the pile and the hat ticks the tab. The tempo can be changed.
 - **Education on a line.** The two schools sit on one pen line from 2018 to 2027; pointing at a school marks its stretch of the line, and the other way round.
 - **Ink.** The pen lines of a card are drawn the first time the card is on top, and the note on its back is written line by line the first time it is turned over, with the highlighter following the pen. Screenshots are stuck on with tape after the text. Sending from the contact card stamps the date on the note.
-- **CV on the table.** Clicking the "Open to work" sticker pulls the CV out from under the first card, with a download link and the other language one click away. The sticker can also be dragged to another spot on its card; its place is remembered. The page previews (`public/cv-EN.webp`, `public/cv-PL.webp`) are made from the PDFs with `pdftoppm -r 150` and should be regenerated whenever a CV changes.
+- **CV on the table.** Clicking the sticker on the first card pulls the CV out from under the first card, with a download link and the other language one click away. The sticker can also be dragged to another spot on its card; its place is remembered. The page previews (`public/cv-EN.webp`, `public/cv-PL.webp`) are made from the PDFs with `pdftoppm -r 150` and should be regenerated whenever a CV changes.
 - **Light switch.** Flips between light and dark. Each flip moves to the next variant: orange and beige, pink and beige, yellow and brown for light; espresso, wine and umber for dark. The choice is remembered.
 - **Live GitHub list.** On load, every five minutes and when the tab regains focus, the page reads public repositories of `tworekrobert` from the GitHub API and adds new non-fork repositories to the "Other projects" card. The last result is cached in `localStorage`, so the card still works when the API limit is reached.
 - **Sequencer.** Scheduled on the Web Audio clock, so the beat stays steady. The playhead follows what you hear, clicking a square plays that drum, and the beat stops when you flip or leave the card.
