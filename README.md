@@ -29,7 +29,7 @@
 
 ## About
 
-This is the portfolio of Robert Tworek, a Technical Computer Science student at Wroclaw University of Science and Technology and an AI and .NET developer (LLM agents, automation, ASP.NET Core backends). The site has three main projects (OrderFlow, Helpdesk, Pharmacy), an "Other projects" card that fills itself from GitHub, experience, education with courses, skills and a contact card.
+This is the portfolio of Robert Tworek, a Technical Computer Science student at Wroclaw University of Science and Technology and an AI and .NET developer (LLM agents, automation, ASP.NET Core backends). The site has four main projects (Bot Message Analyzer, OrderFlow, Helpdesk, Pharmacy), an "Other projects" card that fills itself from GitHub, experience, education with courses, skills and a contact card.
 
 ## What's in the deck
 
@@ -38,7 +38,7 @@ This is the portfolio of Robert Tworek, a Technical Computer Science student at 
 | Hi! | Introduction, a sticker with the current role and a grouped contents list. |
 | Backstory | How music led to code, with a small drum sequencer to play with. |
 | Experience, Education, Skills | Short notes written in the first person, details on the back. |
-| Order Flow, Helpdesk, Pharmacy | One card each: what it is, three facts, the stack. Back: why I built it, what is inside, the hardest part, screenshots. |
+| Bot Message Analyzer, Order Flow, Helpdesk, Pharmacy | One card each: what it is, three facts, the stack. Back: why I built it, what is inside, the hardest part, screenshots. |
 | Other projects | Curated extra projects plus any new public repositories from GitHub. |
 | Contact | A small form that opens a prepared email, copy-email, and links. |
 
