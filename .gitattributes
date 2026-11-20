@@ -2,5 +2,3 @@ public/site.html linguist-generated=true linguist-vendored=true linguist-detecta
 source/data_raw.js linguist-generated=true linguist-vendored=true linguist-detectable=false
 source/facts_raw.html linguist-generated=true linguist-vendored=true linguist-detectable=false
 source/fonts.json linguist-generated=true linguist-vendored=true linguist-detectable=false
-saass/** linguist-vendored=true linguist-generated=true linguist-detectable=false
-up/** linguist-vendored=true linguist-generated=true linguist-detectable=false
