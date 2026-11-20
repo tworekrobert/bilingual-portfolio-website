@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 {{DATA}}
-const ICON={orderflow:'box',helpdesk:'headset',pharmacy:'pill',portfolio:'globe',tsp:'graph',vocab:'book'};
+const ICON={analyzer:'terminal',orderflow:'box',helpdesk:'headset',pharmacy:'pill',portfolio:'globe',tsp:'graph',vocab:'book'};
 const LIVE={portfolio:'https://portfoliotworekrobert.vercel.app'};
 WORK.forEach(w=>{w.shots=SHOTS[w.id]||null;w.hard=HARD[w.id]||null;w.live=LIVE[w.id]||null;});
 const UI={
@@ -17,6 +17,23 @@ const UI={
   text_view:'Przełącznik bez ściemy',lang_btn:'Zmiana języka',lights_off:'Włącznik światła',lights_on:'Włącznik światła',day:'Dzień',night:'Noc',facts_back:'Wróć do kart',music_play:'Włącz muzykę',music_pause:'Zatrzymaj muzykę',role_k:'AI + .NET Developer',how_h:'Jak pracuję',story:'Historia',stack:'Stack',hi_p:'Portfolio rzeczy, które buduję.',lang_to:'Przełącz na angielski',theme_to:'Przełącz dzień / noc'}};
 ['en','pl'].forEach(l=>Object.assign(I18N[l],UI[l]));
 const CP={
+ analyzer:{
+  lead:{en:"A command-line tool that reads a chatbot's or voicebot's conversation logs and finds the questions it keeps failing. It groups the failures into topics, ranks them and hands back the customer phrases to retrain the bot with.",
+        pl:"Narzędzie wiersza poleceń, które czyta logi rozmów chatbota lub voicebota i znajduje pytania, na których bot ciągle się wykłada. Grupuje porażki w tematy, układa je od najważniejszych i oddaje frazy klientów, na których można bota douczyć."},
+  does:{en:["Every customer turn gets a verdict: answered, not understood or wrong answer, with a topic and a one-sentence reason.","Emails, phone numbers and long digit sequences are masked before anything is cached or sent.","99 automated tests, and the sample report rebuilds from the cache without an API key."],
+        pl:["Każda wypowiedź klienta dostaje werdykt: odpowiedziano, nie zrozumiano albo błędna odpowiedź, z tematem i jednozdaniowym uzasadnieniem.","Adresy e-mail, numery telefonów i długie ciągi cyfr są maskowane, zanim cokolwiek trafi do cache albo zostanie wysłane.","99 testów automatycznych, a przykładowy raport odtwarza się z cache bez klucza API."]},
+  why:{en:"A bot rarely fails loudly. It says it didn't understand, or confidently answers a different question, and neither shows up until someone reads the transcripts. I wanted a tool that does the reading and gives back a ranked list of what to fix.",
+       pl:"Bot rzadko zawodzi głośno. Mówi, że nie zrozumiał, albo pewnie odpowiada na inne pytanie, i żadnego z tych przypadków nie widać, dopóki ktoś nie przeczyta zapisów rozmów. Chciałem narzędzia, które zrobi to czytanie i odda uporządkowaną listę rzeczy do poprawy."},
+  pts:{en:["Fixed rules go first: if the bot's reply contains one of its own fallback phrases, the turn counts as not understood without asking the model.",
+           "Everything else goes to the Gemini API in batches, and near-duplicate topics are merged in one extra call.",
+           "Every model answer is cached, so the same input never costs a second request.",
+           "Tested on 66 synthetic clinic conversations with five planted gaps and two wrong-answer patterns, and it caught all of them.",
+           "C# and .NET 8, 99 xUnit tests and GitHub Actions."],
+       pl:["Najpierw działają stałe reguły: jeśli odpowiedź bota zawiera jedną z jego własnych fraz typu „nie zrozumiałem”, wypowiedź liczy się jako niezrozumiana bez pytania modelu.",
+           "Reszta trafia partiami do Gemini API, a prawie identyczne tematy są łączone w jednym dodatkowym wywołaniu.",
+           "Każda odpowiedź modelu trafia do cache, więc te same dane nigdy nie kosztują drugiego zapytania.",
+           "Przetestowany na 66 syntetycznych rozmowach z przychodnią z pięcioma podłożonymi lukami i dwoma wzorcami błędnych odpowiedzi. Wyłapał wszystkie.",
+           "C# i .NET 8, 99 testów xUnit i GitHub Actions."]}},
  orderflow:{
   lead:{en:"The back office of an online shop, without the shop. A customer places an order and pays, the warehouse packs and ships it, and a manager can see how it all went. Every step is checked, so an order can't skip ahead or go back.",
         pl:"Zaplecze sklepu internetowego, bez samego sklepu. Klient składa zamówienie i płaci, magazyn je pakuje i wysyła, a kierownik widzi, jak to wszystko poszło. Każdy krok jest sprawdzany, więc zamówienie nie przeskoczy etapu ani się nie cofnie."},
@@ -177,7 +194,7 @@ function projBack(w){
  return `<div class="bd pb scroll note"><div class="col"><p><b>${K.why}</b> ${w.whyT[LANG]}</p><p><b>${K.inside}</b> ${w.pts[LANG].slice(0,3).join(' ')}</p><p>${w.pts[LANG].slice(3).join(' ')}</p></div><div class="col">${w.hard?`<p><b>${K.hard}</b> ${w.hard[LANG]}</p>`:''}${gal}</div></div>`;
 }
 let GH=[];try{GH=JSON.parse(store.get('rt-gh')||'[]')||[];}catch(_){GH=[];}
-const KNOWNRE=/order.?flow|helpdesk|pharmac|tsp|vocab|restaurant|portfolio|vaccin/i;const KNOWN=['order-flow-management-system','helpdesk-management-system','pharmacy-management-system','tsp-algorithms-benchmark','vocabulary-learning-app','restaurant-process-simulation','vaccination-programme-planner','tworekrobert'];
+const KNOWNRE=/order.?flow|helpdesk|pharmac|tsp|vocab|restaurant|portfolio|vaccin/i;const KNOWN=['order-flow-management-system','helpdesk-management-system','pharmacy-management-system','tsp-algorithms-benchmark','vocabulary-learning-app','restaurant-process-simulation','vaccination-programme-planner','bot-message-analyzer','tworekrobert'];
 const KINDRE=[[/^\s*(university|academic|uni)\s+project\s*:\s*/i,'k_academic'],[/^\s*(team|group)\s+project\s*:\s*/i,'k_team'],[/^\s*(personal|side|portfolio)\s+project\s*:\s*/i,'k_personal']];
 function ghKind(desc){const d=desc||'';for(const[re,k]of KINDRE){if(re.test(d)){const t=d.replace(re,'').trim();return{kind:k,desc:t?t.charAt(0).toUpperCase()+t.slice(1):''};}}return{kind:'gh_repo',desc:d.trim()};}
 function ghEntries(){return GH.filter(r=>!KNOWN.includes(r.name)&&!KNOWNRE.test(r.name)).map(r=>({...ghKind(r.desc),id:'gh-'+r.name,name:{en:r.name.replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),pl:r.name.replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase())},stack:[r.lang].concat(r.topics||[]).filter(Boolean).join(', '),link:r.url,lk:'repo'})).map(e=>({id:e.id,name:e.name,kind:e.kind,stack:e.stack,link:e.link,lk:e.lk,d:{en:e.desc||T('no_desc'),pl:e.desc||T('no_desc')}}));}
