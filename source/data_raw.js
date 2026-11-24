@@ -227,6 +227,13 @@ const NOTES=[
  {id:'edu',t:{en:'Education',pl:'Edukacja'},sub:{en:'2018 — now',pl:'2018 — obecnie'},
   html:(L,l)=>`<span class="period">${L.edu1_period}</span><h4>Wrocław University of Science and Technology</h4><p>${L.edu1_body}</p>
     <span class="period">${L.edu2_period}</span><h4>Electronic Schools Complex, Bolesławiec</h4><p>${L.edu2_body}</p>`},
+ {id:'talkie',t:{en:'Talkie.ai',pl:'Talkie.ai'},sub:{en:'Nov 2026',pl:'Lis 2026'},
+  html:(L,l)=>l==='pl'?`<span class="period">Od listopada 2026 · zdalnie</span><h4>Talkie.ai — Prompt Engineer</h4>
+    <ul><li>Pisanie, testowanie i dopracowywanie promptów agentów AI, którzy prowadzą rozmowy głosowe i czaty z pacjentami przychodni w USA.</li>
+    <li>Analiza prawdziwych rozmów z pacjentami: szukanie miejsc, w których agent się myli, i sprawdzanie każdej zmiany, zanim trafi do pacjentów.</li></ul>`
+   :`<span class="period">Since November 2026 · remote</span><h4>Talkie.ai — Prompt Engineer</h4>
+    <ul><li>Writing, testing and refining the prompts behind AI agents that handle voice calls and chats with patients of US clinics.</li>
+    <li>Going through real patient conversations to find where an agent gets things wrong, and checking every change before it reaches patients.</li></ul>`},
  {id:'koda',t:{en:'KODA.AI',pl:'KODA.AI'},sub:{en:'Sep 2026',pl:'Wrz 2026'},
   html:(L,l)=>l==='pl'?`<span class="period">Wrzesień i październik 2026 · praktyki, 160 godzin</span><h4>KODA.AI — praktykant, Generative Prompt Engineer</h4>
     <ul><li>Praca na platformie konwersacyjnej AI KODA: testowanie chatbotów i voicebotów, weryfikacja promptów i baz wiedzy oraz ocena przebiegu rozmów.</li>

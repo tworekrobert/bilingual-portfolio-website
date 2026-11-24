@@ -611,6 +611,12 @@ body.phys .card.draw .hd .sp,body.phys .card.draw :is(.toc button,.links a,.does
 /* experience: the current job spans the top row, the two internships share the row below */
 .xp.now3 .grid4{grid-template-rows:auto minmax(0,1fr);grid-auto-rows:auto;}
 .xp.now3 .ent:first-child{grid-column:1/-1;}
+@container card (max-height:560px){
+ .xp.now3{gap:12px;} .xp.now3 .lead{font-size:17px;line-height:1.25;}
+ .xp.now3 .grid4{gap:12px 34px;} .xp.now3 .ent ul{margin-top:6px;}
+ body .xp.now3 .ent li{font-size:16px;line-height:1.3;margin-bottom:4px;}
+ .xp.now3 .ent:not(:first-child) li:nth-child(n+2){display:none;}
+}
 /* education: a strip of short courses above the timeline */
 .xp.edu .grid4{flex:none;}
 .edu .crs{display:flex;flex-direction:column;gap:8px;}
