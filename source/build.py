@@ -1,42 +1,16 @@
 import re, json, sys, os
 HERE=os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0,HERE)
-import icons2
+import icons
 OUT=os.path.abspath(sys.argv[1]) if len(sys.argv)>1 else os.path.join(HERE,'..','public','site.html')
 os.chdir(HERE)
 data=open('data_raw.js',encoding='utf8').read()
 facts=open('facts_raw.html',encoding='utf8').read()
-facts=facts[:facts.index('<div id="ctxmenu"')]
-# ---- copy purge (dashes, middots, arrows, marks, emoji) ----
-def purge(s):
-    T=[("Finishing my B.Eng. thesis — graduating February 2027.","Finishing my B.Eng. thesis, graduating February 2027."),
-       ("— team project, 3 people","(team project, 3 people)"),("— projekt zespołowy, 3 osoby","(projekt zespołowy, 3 osoby)"),
-       ("Robert Tworek — Technical","Robert Tworek, Technical"),("Robert Tworek — Informatyka","Robert Tworek, Informatyka"),
-       ("2018 — now","2018 to now"),("2018 — obecnie","2018 do dziś"),("2022 — obecnie","2022 do dziś"),("2022 — present","2022 to present"),
-       ("2018 — June 2022","2018 to June 2022"),("2018 — czerwiec 2022","2018 do czerwca 2022"),("2018 — 2022","2018 to 2022"),
-       ("Copied ✓","Copied"),("Skopiowano ✓","Skopiowano"),("← Back to desktop","Back"),("← Wróć do pulpitu","Wróć")]
-    for a,b in T: s=s.replace(a,b)
-    s=re.sub(r'(<h4>[^<]*?) — ',r'\1 / ',s)
-    s=re.sub(r' — (?=(C#|React|xUnit|Python/Django))',': ',s)
-    s=re.sub(r' — (?=[A-ZĄĆĘŁŃÓŚŹŻ])','. ',s)
-    s=s.replace(' — ',', ').replace('—',',').replace('–','-')
-    s=s.replace(' · ',' / ').replace('·','/')
-    s=s.replace(' →','').replace('→','to').replace('←','')
-    s=s.replace(' ✓','').replace('✓','').replace('…','...')
-    EM=re.compile('[\U0001F300-\U0001FAFF☀-➿⬀-⯿️‍]')
-    s=re.sub(r'\s*'+EM.pattern+r'+(?=[\'"`<])','',s)
-    s=re.sub(EM.pattern+r'+\s?','',s)
-    return s
-data=purge(data); facts=purge(facts)
-data,nA=re.subn(r'\s*<p>[^<]*Aqua Dial[^<]*</p>','',data); print('aqua removed',nA)
-# the notes data references an obsolete "Notes" prefix; nothing else to patch
-tracks=[{'src':f'music/track{n:02d}.mp3','title':f'Hopeful Memories {n}'} for n in range(1,13)]
 F=json.load(open('fonts.json'))
 css=open('card.css').read()
 for k,v in F.items(): css=css.replace('{{F_%s}}'%k.upper(),v)
-css=icons2.css()+css
+css=icons.css()+css
 js=open('card.js').read().replace('{{DATA}}',data)
-facts=facts.replace('<div id="facts">','<div id="facts" class="ov" role="dialog" aria-label="Plain text view">',1).replace('<a class="back" id="facts-close" role="button" tabindex="0" data-k="facts_back">← Back to desktop</a>','<a class="back" id="facts-close" role="button" tabindex="0" data-k="facts_back">Back to the deck</a>')
 html=f'''<!doctype html>
 <html lang="en">
 <head>
@@ -86,6 +60,3 @@ html=f'''<!doctype html>
 '''
 open(OUT,'w',encoding='utf8').write(html)
 print('wrote',OUT,len(html))
-body=re.sub(r'base64,[A-Za-z0-9+/=]{200,}','',html)
-EM=re.compile('[\U0001F300-\U0001FAFF☀-➿⬀-⯿️‍]')
-print({p:body.count(p) for p in ('—','–','·','→','←','✓','…','&mdash;','&middot;') if body.count(p)},'emoji',len(EM.findall(body)))
