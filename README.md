@@ -61,7 +61,7 @@ This is the portfolio of Robert Tworek, a Technical Computer Science student at 
 ## Project structure
 
 ```text
-bilingual-portfolio-website-main/
+bilingual-portfolio-website/
 |-- app/               # minimal Next.js shell: robots, sitemap, icon, fallback page
 |-- public/
 |   |-- site.html      # the whole portfolio, one self-contained file
