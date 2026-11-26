@@ -210,11 +210,11 @@ body.night .plate img{filter:url(#duo-n);}
 .tab{width:auto;min-width:40px;height:44px;flex-direction:row;justify-content:center;gap:9px;padding:0 11px;border-radius:6px;font:500 13px/1 var(--mono);}
 .tab em{font:600 14px/1 var(--sans);font-style:normal;white-space:nowrap;}
 .tab[aria-current="true"]{transform:translateY(-6px);}
-/* cover facts: plain lines, not pills */
+/* cover facts */
 .chips{display:flex;flex-direction:column;margin-top:18px;max-width:340px;border-top:1.5px solid var(--ink);}
 .chips .chip{display:block;margin:0;padding:8px 0 7px;box-shadow:none;border-bottom:1.5px solid var(--rule);font:400 15px/1.3 var(--sans);color:var(--ink);}
 .cover .chips{margin-top:18px;}
-/* skills: typeset inventory, not badges */
+/* skills */
 .sk .chip{display:inline;margin:0;padding:0;box-shadow:none;font:400 19px/1.55 var(--disp);color:var(--ink);}
 .sk .chip:not(:last-child)::after{content:" /";color:var(--soft);margin:0 7px 0 3px;font-family:var(--sans);font-size:15px;}
 .sk .lab{margin-bottom:8px;}
@@ -324,7 +324,7 @@ body.wine .plate img,body.wine .thumbs img{filter:url(#duo-w);} body.umber .plat
 .note.bd:not(.pb) p{max-width:60ch;font-size:23px;}
 .face.back .hd span:not(.no):not(.sp){font-size:32px;}
 
-/* pen-drawn dividers instead of ruled borders */
+/* pen-drawn dividers */
 :root{--p1:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M1 4.6 C28 2.8 58 5.8 96 3.9 S158 4.8 199 3.1' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");--p2:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M1 3.2 C22 5.1 52 2.5 102 4.3 S172 2.9 199 4.7' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");--p3:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M1 4 C38 3 78 5.4 122 3.9 S182 3.7 199 4.5' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M30 6.3 C80 5.5 140 6.7 190 5.9' fill='none' stroke='black' stroke-width='.8' stroke-opacity='.55' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");}
 body{--lc:color-mix(in srgb,var(--ink) 48%,transparent);}
 .toc,.links,.chips,.ent,.sk{border-top:0 !important;}
@@ -341,7 +341,7 @@ body{--lc:color-mix(in srgb,var(--ink) 48%,transparent);}
 .seqrow button{box-shadow:none;border:0;background:color-mix(in srgb,var(--ink) 14%,transparent);}
 .seqrow button:nth-child(4n+2),.seqrow button:nth-child(4n+3){background:color-mix(in srgb,var(--ink) 8%,transparent);box-shadow:none;}
 .seqrow button.on{background:var(--ink);}
-/* hand-made feel: pen face for small labels, uneven edges, tape, slight tilts */
+/* pen face for small labels, uneven edges, tape, slight tilts */
 .toc .grp{flex:none;font:400 22px/1 "Hand",var(--sans);color:var(--soft);padding:12px 4px 3px;}
 .lab,.stk b,.hd,.seqbar .lab,.btn,.flipk,.key,.tab em,.lnk,.shl,.sticker small,.con label,.con .lab{font-family:"Hand",var(--sans);font-weight:400;letter-spacing:.01em;}
 .btn,.flipk,.key{font-size:18px;} .flipk{font-size:18px;} .lab{font-size:19px;} .stk b{font-size:19px;} .tab{font-size:14px;}
@@ -361,7 +361,7 @@ body{--lc:color-mix(in srgb,var(--ink) 48%,transparent);}
 .w{display:inline-block;white-space:nowrap;} .c{display:inline-block;}
 .side:hover,.side:focus-visible{background:var(--spot);color:var(--spot-ink);box-shadow:none;}
 
-/* real handwriting: Biro Script for the notes, Simple Handmade for labels */
+/* handwriting: Biro Script for the notes, Simple Handmade for labels */
 .face.back .hd span:not(.no):not(.sp),.face.back .hd{font-family:"Biro","Hand",cursive;font-size:44px;}
 .note,.note p,.note .shl,.note .shl b{font-family:"Biro","Hand",cursive;}
 .note p{font-size:30px;line-height:1.32;} .note.pb .col p{font-size:27px;line-height:1.3;} .note.bd:not(.pb) p{font-size:31px;max-width:34em;} .note .shl{font-size:30px;}
